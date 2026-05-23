@@ -15,7 +15,7 @@ import { NextResponse, type NextRequest } from "next/server";
  *
  * To add a product: add its slug to PRODUCT_SLUGS below.
  */
-const PRODUCT_SLUGS = ["carwashflow", "eduflow"] as const;
+const PRODUCT_SLUGS = ["carwashflow", "eduflow", "tripflow"] as const;
 
 export function middleware(req: NextRequest) {
   const url = req.nextUrl;

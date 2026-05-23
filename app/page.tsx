@@ -23,6 +23,13 @@ export default function ProductIndex() {
       url: "/eduflow",
       live: true,
     },
+    {
+      slug: "tripflow",
+      name: "TripFlow",
+      tagline: "包车 / 车队 / 旅游运输管理系统",
+      url: "/tripflow",
+      live: true,
+    },
     // Add future products here as they ship.
     // { slug: "beautyflow", name: "BeautyFlow", tagline: "美容中心管理", url: "/beautyflow", live: false },
   ];

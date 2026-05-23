@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TripFlow · 包车公司管理系统 Demo</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f3eee4;
+    color: #2d3a2e;
+    min-height: 100vh;
+  }
+  .app-shell {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: #faf7f2;
+    min-height: 100vh;
+    box-shadow: 0 0 40px rgba(0,0,0,0.05);
+  }
+  /* Top banner */
+  .top-banner {
+    background: linear-gradient(135deg, #2d3a2e 0%, #4a5a4d 100%);
+    color: #fff;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .banner-left { font-size: 13px; opacity: 0.9; }
+  .banner-cta {
+    background: #d4a85a;
+    color: #2d3a2e;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  /* Industry switcher */
+  .industry-bar {
+    background: #fff;
+    padding: 16px 28px;
+    border-bottom: 1px solid #e8e0d3;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .industry-label {
+    font-size: 13px;
+    color: #6b7568;
+    font-weight: 500;
+  }
+  .industry-btn {
+    background: #f0ebe0;
+    border: 1px solid transparent;
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #5a6b5c;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .industry-btn.active {
+    background: #3a4a6a;
+    color: #fff;
+    border-color: #3a4a6a;
+    box-shadow: 0 2px 8px rgba(90,122,95,0.25);
+  }
+  .industry-btn:hover:not(.active) {
+    background: #e5dcc8;
+  }
+  .demo-badge {
+    margin-left: auto;
+    font-size: 11px;
+    color: #a89878;
+    background: #fdf6e3;
+    padding: 5px 12px;
+    border-radius: 12px;
+    border: 1px solid #f0e4c8;
+  }
+  .app-body {
+    display: flex;
+    min-height: 720px;
+  }
+  /* Sidebar */
+  .sidebar {
+    width: 230px;
+    background: #fff;
+    border-right: 1px solid #e8e0d3;
+    padding: 20px 0;
+    flex-shrink: 0;
+  }
+  .brand {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid #f0ebe0;
+    margin-bottom: 16px;
+  }
+  .brand-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2d3a2e;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand-logo {
+    width: 34px;
+    height: 34px;
+    background: linear-gradient(135deg, #4e6688, #3a4a6a);
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .brand-sub {
+    font-size: 11px;
+    color: #8a948c;
+    margin-top: 4px;
+    margin-left: 44px;
+  }
+  .nav-item {
+    padding: 11px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: #5a6b5c;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+  }
+  .nav-item:hover { background: #f7f3ea; }
+  .nav-item.active {
+    background: #eaeef5;
+    color: #2d3a2e;
+    border-left-color: #3a4a6a;
+    font-weight: 600;
+  }
+  .nav-icon { width: 18px; text-align: center; font-size: 15px; }
+  .nav-section {
+    font-size: 10px;
+    color: #a89878;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 16px 20px 6px;
+    font-weight: 600;
+  }
+  /* Main content */
+  .main-content {
+    flex: 1;
+    padding: 26px 30px;
+    overflow-y: auto;
+    background: #faf7f2;
+  }
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .page-title { font-size: 24px; font-weight: 700; color: #2d3a2e; }
+  .page-sub { font-size: 13px; color: #6b7568; margin-top: 4px; }
+  .btn-primary {
+    background: #3a4a6a;
+    color: #fff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 7px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+  }
+  .btn-primary:hover { background: #283450; }
+  .btn-secondary {
+    background: #fff;
+    color: #5a6b5c;
+    border: 1px solid #d4cdb8;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+    margin-left: 6px;
+  }
+  /* Stat cards */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: #fff;
+    border: 1px solid #e8e0d3;
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: #8a948c;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .stat-value { font-size: 26px; font-weight: 700; color: #2d3a2e; }
+  .stat-trend { font-size: 11px; color: #4e6688; margin-top: 6px; }
+  .stat-trend.warn { color: #c08855; }
+  /* Tables */
+  .data-card {
+    background: #fff;
+    border: 1px solid #e8e0d3;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .data-card-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid #f0ebe0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .data-card-title { font-size: 15px; font-weight: 600; color: #2d3a2e; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: #f7f3ea;
+    padding: 11px 14px;
+    text-align: left;
+    font-weight: 600;
+    color: #6b7568;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e8e0d3;
+  }
+  td {
+    padding: 13px 14px;
+    border-bottom: 1px solid #f0ebe0;
+    color: #2d3a2e;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fbf8f1; }
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .pill-green { background: #e3eaf2; color: #283450; }
+  .pill-orange { background: #fbe9d4; color: #b07540; }
+  .pill-red { background: #f5dada; color: #a04848; }
+  .pill-blue { background: #dde7f0; color: #4a6580; }
+  /* Schedule */
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: 70px repeat(6, 1fr);
+    background: #fff;
+    border: 1px solid #e8e0d3;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 12px;
+  }
+  .sch-cell {
+    padding: 8px 6px;
+    border-right: 1px solid #f0ebe0;
+    border-bottom: 1px solid #f0ebe0;
+    min-height: 55px;
+  }
+  .sch-header {
+    background: #f7f3ea;
+    font-weight: 600;
+    color: #6b7568;
+    text-align: center;
+    padding: 11px 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+  .sch-time {
+    background: #f7f3ea;
+    color: #8a948c;
+    text-align: center;
+    font-size: 10px;
+    padding: 8px 4px;
+    font-weight: 500;
+  }
+  .sch-event {
+    background: #d3d9e5;
+    color: #2d3a2e;
+    border-radius: 5px;
+    padding: 6px 7px;
+    margin: 1px;
+    font-size: 10px;
+    line-height: 1.3;
+    cursor: pointer;
+  }
+  .sch-event.art { background: #e8d4d4; color: #6a3a3a; }
+  .sch-event.music { background: #d4d8e8; color: #3a4a6a; }
+  .sch-event-title { font-weight: 600; }
+  .sch-event-sub { font-size: 9px; opacity: 0.85; margin-top: 1px; }
+  /* Avatar */
+  .avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #d3d9e5;
+    color: #283450;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  /* Parent portal mobile */
+  .phone-container {
+    background: #fff;
+    border: 1px solid #e8e0d3;
+    border-radius: 10px;
+    padding: 26px;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .phone {
+    width: 290px;
+    background: #2d3a2e;
+    border-radius: 32px;
+    padding: 10px;
+    flex-shrink: 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+  .phone-screen {
+    background: #faf7f2;
+    border-radius: 24px;
+    overflow: hidden;
+    height: 560px;
+  }
+  .phone-header {
+    background: linear-gradient(135deg, #3a4a6a, #283450);
+    color: #fff;
+    padding: 26px 16px 16px;
+    text-align: center;
+  }
+  .phone-greet { font-size: 11px; opacity: 0.85; }
+  .phone-name { font-size: 17px; font-weight: 600; margin-top: 2px; }
+  .phone-body { padding: 14px; }
+  .phone-section-title {
+    font-size: 11px;
+    color: #8a948c;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .phone-class-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-left: 3px solid #3a4a6a;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .phone-class-card.today { border-left-color: #c08855; background: #fdf6e3; }
+  .phone-class-time { font-size: 11px; color: #6b7568; font-weight: 500; }
+  .phone-class-name { font-size: 13px; font-weight: 600; color: #2d3a2e; margin: 2px 0; }
+  .phone-class-teacher { font-size: 11px; color: #8a948c; }
+  .phone-notice {
+    background: #fdf6e3;
+    border: 1px solid #f0e4c8;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 11px;
+    color: #6b5530;
+    margin-bottom: 12px;
+  }
+  .phone-explain { flex: 1; min-width: 260px; }
+  .phone-explain h4 { font-size: 16px; color: #2d3a2e; margin-bottom: 14px; }
+  .phone-explain ul { list-style: none; padding: 0; }
+  .phone-explain li {
+    padding: 10px 0;
+    font-size: 13px;
+    color: #5a6b5c;
+    border-bottom: 1px dashed #e8e0d3;
+    display: flex;
+    gap: 10px;
+    line-height: 1.5;
+  }
+  .check { color: #3a4a6a; font-weight: 700; flex-shrink: 0; font-size: 15px; }
+  /* Commission */
+  .commission-formula {
+    background: #f7f3ea;
+    border: 1px dashed #d4cdb8;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 12px;
+    color: #6b7568;
+    margin-bottom: 18px;
+  }
+  .progress-bar {
+    width: 100px;
+    height: 6px;
+    background: #f0ebe0;
+    border-radius: 3px;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .progress-fill { height: 100%; background: #4e6688; }
+  .progress-fill.warn { background: #c08855; }
+  /* Notice boxes */
+  .info-box {
+    background: #eaeef5;
+    border: 1px solid #d3d9e5;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: #2d3a2e;
+    line-height: 1.6;
+  }
+  .info-box.warn {
+    background: #fdf6e3;
+    border-color: #f0e4c8;
+    color: #6b5530;
+  }
+  .page-section { display: none; animation: fadeIn 0.25s ease; }
+  .page-section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  /* Footer */
+  .footer {
+    background: #2d3a2e;
+    color: #faf7f2;
+    padding: 30px 28px;
+    text-align: center;
+  }
+  .footer h3 { font-size: 18px; margin-bottom: 8px; }
+  .footer p { font-size: 13px; opacity: 0.8; margin-bottom: 14px; }
+  .footer .btn-primary {
+    background: #d4a85a;
+    color: #2d3a2e;
+    padding: 10px 24px;
+    font-weight: 600;
+  }
+  .footer .btn-primary:hover { background: #c0944a; }
+  @media (max-width: 900px) {
+    .sidebar { width: 64px; }
+    .nav-item span:not(.nav-icon) { display: none; }
+    .brand-name > span:not(.brand-logo) { display: none; }
+    .brand-sub { display: none; }
+    .nav-section { font-size: 0; padding: 6px 0; height: 4px; }
+    .nav-icon { font-size: 16px; }
+  }
+  @media (max-width: 600px) {
+    .main-content { padding: 18px 16px; }
+    .page-title { font-size: 20px; }
+    .schedule-grid { font-size: 10px; }
+    .sch-cell { min-height: 45px; padding: 5px 3px; }
+    .sch-event { padding: 4px 5px; font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- Top banner -->
+  <div class="top-banner">
+    <div class="banner-left">✨ <strong>TripFlow</strong> · 专为包车公司、车队、旅游运输打造的管理系统</div>
+    <button class="banner-cta" onclick="alert('请联络我们：[您的联络方式]')">预约 Demo →</button>
+  </div>
+
+  <!-- Industry switcher -->
+  <div class="industry-bar">
+    <span class="industry-label">行业演示：</span>
+    <button class="industry-btn active" data-industry="charter">🚐 包车公司</button>
+    <span class="demo-badge">Demo · 数据为演示用</span>
+  </div>
+
+  <div class="app-body">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-name">
+          <span class="brand-logo" id="brandLogo">绿</span>
+          <span id="brandText">绿洲包车</span>
+        </div>
+        <div class="brand-sub" id="brandSub">车队管理后台</div>
+      </div>
+      <div class="nav-section">主要</div>
+      <div class="nav-item active" data-page="dashboard"><span class="nav-icon">📊</span><span>调度仪表盘</span></div>
+      <div class="nav-item" data-page="schedule"><span class="nav-icon">🚐</span><span>行程调度</span></div>
+      <div class="nav-item" data-page="students"><span class="nav-icon">📅</span><span id="navStudents">司机排班</span></div>
+      <div class="nav-item" data-page="teachers"><span class="nav-icon">📋</span><span id="navTeachers">报价管理</span></div>
+      <div class="nav-section">客户 & 司机</div>
+      <div class="nav-item" data-page="payments"><span class="nav-icon">👤</span><span id="navPayments">客户管理</span></div>
+      <div class="nav-item" data-page="commission"><span class="nav-icon">👨‍✈️</span><span>司机管理</span></div>
+      <div class="nav-section">财务</div>
+      <div class="nav-item" data-page="portal"><span class="nav-icon">💰</span><span>司机工资</span></div>
+      <div class="nav-item" data-page="attendance"><span class="nav-icon">📱</span><span>司机 Portal</span></div>
+    </aside>
+
+    <main class="main-content">
+      <!-- DASHBOARD -->
+      <div class="page-section active" id="page-dashboard">
+        <div class="page-header">
+          <div>
+            <div class="page-title" id="dashTitle">早安，陈老板 👋</div>
+            <div class="page-sub" id="dashSub">这是今天的绿洲包车概况</div>
+          </div>
+          <button class="btn-primary">+ 新增行程</button>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-label" id="stat1Label">本月行程</div>
+            <div class="stat-value" id="stat1Value">186</div>
+            <div class="stat-trend">↑ 比上月 +24 趟</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">本月营业额</div>
+            <div class="stat-value">RM 52,400</div>
+            <div class="stat-trend">↑ 88% 已收</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">未付款项</div>
+            <div class="stat-value">RM 6,250</div>
+            <div class="stat-trend warn">⚠ 3 个客户</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label" id="stat4Label">今天的行程</div>
+            <div class="stat-value">9</div>
+            <div class="stat-trend">7 位司机在岗</div>
+          </div>
+        </div>
+
+        <div class="data-card">
+          <div class="data-card-header">
+            <div class="data-card-title">📋 今日待办</div>
+            <button class="btn-secondary">查看全部</button>
+          </div>
+          <table>
+            <tbody>
+              <tr>
+                <td style="width:40px;">⏰</td>
+                <td><strong id="todo1">JB → 机场</strong> · 6:30 AM · 李师傅 (JJK 8888)</td>
+                <td><span class="pill pill-blue">即将出发</span></td>
+              </tr>
+              <tr>
+                <td>💬</td>
+                <td>客户 <strong>ABC Sdn Bhd</strong> 询问下周 3 天包车报价</td>
+                <td><span class="pill pill-orange">待回复</span></td>
+              </tr>
+              <tr>
+                <td>💰</td>
+                <td><strong>明天 3 辆同时出车</strong>，1 位司机调休，待协调</td>
+                <td><span class="pill pill-orange">追踪中</span></td>
+              </tr>
+              <tr>
+                <td>📊</td>
+                <td>本月 <strong id="todo4">司机工资</strong> 已计算完毕，待审核</td>
+                <td><span class="pill pill-green">就绪</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box">
+          💡 <strong>这个仪表盘解决什么：</strong>很多包车老板早上到办公室第一件事就是想知道 "今天哪些车要出？谁还没付月结？司机调度有没有冲突？"。这一页 30 秒内全部看清楚，不用翻 Excel、不用打十几通 WhatsApp 问司机。
+        </div>
+      </div>
+
+      <!-- SCHEDULE -->
+      <div class="page-section" id="page-schedule">
+        <div class="page-header">
+          <div>
+            <div class="page-title">行程调度</div>
+            <div class="page-sub">本周行程 · 2026年5月25日 - 5月31日</div>
+          </div>
+          <div>
+            <button class="btn-secondary">← 上一周</button>
+            <button class="btn-secondary">下一周 →</button>
+            <button class="btn-primary" style="margin-left:8px;">+ 新增行程</button>
+          </div>
+        </div>
+
+        <div class="schedule-grid">
+          <div class="sch-header"></div>
+          <div class="sch-header">周一</div>
+          <div class="sch-header">周二</div>
+          <div class="sch-header">周三</div>
+          <div class="sch-header">周四</div>
+          <div class="sch-header">周五</div>
+          <div class="sch-header">周六</div>
+
+          <div class="sch-time">2 PM</div>
+          <div class="sch-cell"></div>
+          <div class="sch-cell"></div>
+          <div class="sch-cell"></div>
+          <div class="sch-cell"></div>
+          <div class="sch-cell"></div>
+          <div class="sch-cell"><div class="sch-event" id="sch1"><div class="sch-event-title">JB→KL</div><div class="sch-event-sub">李师傅 · JJK8888</div></div></div>
+
+          <div class="sch-time">4 PM</div>
+          <div class="sch-cell"><div class="sch-event" id="sch2"><div class="sch-event-title">机场接送</div><div class="sch-event-sub">王师傅 · JQS1234</div></div></div>
+          <div class="sch-cell"><div class="sch-event" id="sch3"><div class="sch-event-title">JB→新山CIQ</div><div class="sch-event-sub">陈师傅 · JHY5566</div></div></div>
+          <div class="sch-cell"><div class="sch-event" id="sch4"><div class="sch-event-title">机场接送</div><div class="sch-event-sub">王师傅 · JQS1234</div></div></div>
+          <div class="sch-cell"><div class="sch-event" id="sch5"><div class="sch-event-title">工厂接送</div><div class="sch-event-sub">黄师傅 · JPL9999</div></div></div>
+          <div class="sch-cell"><div class="sch-event" id="sch6"><div class="sch-event-title">医院接送</div><div class="sch-event-sub">林师傅 · JKL2233</div></div></div>
+          <div class="sch-cell"><div class="sch-event" id="sch7"><div class="sch-event-title">JB→Senai</div><div class="sch-event-sub">李师傅 · JJK8888</div></div></div>
+
+          <div class="sch-time">6 PM</div>
+          <div class="sch-cell"><div class="sch-event" id="sch8"><div class="sch-event-title">XYZ Tours 3天包</div><div class="sch-event-sub">陈师傅 · MPV</div></div></div>
+          <div class="sch-cell"></div>
+          <div class="sch-cell"><div class="sch-event" id="sch9"><div class="sch-event-title">XYZ Tours 3天包</div><div class="sch-event-sub">陈师傅 · MPV</div></div></div>
+          <div class="sch-cell"></div>
+          <div class="sch-cell"><div class="sch-event" id="sch10"><div class="sch-event-title">XYZ Tours 3天包</div><div class="sch-event-sub">陈师傅 · MPV</div></div></div>
+          <div class="sch-cell"></div>
+        </div>
+
+        <div class="info-box warn" style="margin-top:16px;">
+          💡 <strong>提示：</strong>点击任何行程可以查看详情、调整司机/车辆、或一键通知客户。冲突的时段会用红色高亮提醒您。
+        </div>
+      </div>
+
+      <!-- STUDENTS -->
+      <div class="page-section" id="page-students">
+        <div class="page-header">
+          <div>
+            <div class="page-title" id="studPageTitle">司机排班 + 调休</div>
+            <div class="page-sub">12 位司机 · 本周 2 位调休</div>
+          </div>
+          <div>
+            <button class="btn-secondary">📥 汇出 Excel</button>
+            <button class="btn-primary" style="margin-left:8px;">+ 安排班次</button>
+          </div>
+        </div>
+
+        <div class="data-card">
+          <table>
+            <thead>
+              <tr>
+                <th>司机</th>
+                <th id="studCol1">本周班表</th>
+                <th>联络</th>
+                <th>调休状态</th>
+                <th>本月行程</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="avatar">李</span><strong id="stud1">李师傅</strong></td>
+                <td id="studClass1">早班 (6 AM - 2 PM)</td>
+                <td>012-345 6789</td>
+                <td><span class="pill pill-green">在岗</span></td>
+                <td><div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div> 9/10</td>
+              </tr>
+              <tr>
+                <td><span class="avatar">王</span><strong id="stud2">王师傅</strong></td>
+                <td id="studClass2">机场班 (灵活)</td>
+                <td>016-789 1234</td>
+                <td><span class="pill pill-orange">调休中</span></td>
+                <td><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div> 8/8</td>
+              </tr>
+              <tr>
+                <td><span class="avatar">陈</span><strong id="stud3">陈师傅</strong></td>
+                <td id="studClass3">长途 (KL/Singapore)</td>
+                <td>011-222 3344</td>
+                <td><span class="pill pill-green">在岗</span></td>
+                <td><div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div> 6/8</td>
+              </tr>
+              <tr>
+                <td><span class="avatar">黄</span><strong id="stud4">黄师傅</strong></td>
+                <td id="studClass4">工厂员工接送</td>
+                <td>019-555 6677</td>
+                <td><span class="pill pill-red">病假</span></td>
+                <td><div class="progress-bar"><div class="progress-fill warn" style="width:50%"></div></div> 4/8</td>
+              </tr>
+              <tr>
+                <td><span class="avatar">林</span><strong id="stud5">林师傅</strong></td>
+                <td id="studClass5">医院接送 (晚班)</td>
+                <td>013-888 9900</td>
+                <td><span class="pill pill-green">在岗</span></td>
+                <td><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div> 8/8</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box">
+          💡 <strong>每位司机一张档案：</strong>入职日期、执照号码、驾照到期、健康检查、行程历史、客户评价，全部一目了然。司机离职 → 不会消失，只是变 inactive，未来询问还查得到。
+        </div>
+      </div>
+
+      <!-- TEACHERS -->
+      <div class="page-section" id="page-teachers">
+        <div class="page-header">
+          <div>
+            <div class="page-title" id="teacherPageTitle">报价管理</div>
+            <div class="page-sub">42 条标准路线 · 本月生成 156 份报价</div>
+          </div>
+          <button class="btn-primary">+ 新增路线报价</button>
+        </div>
+
+        <div class="data-card">
+          <table>
+            <thead>
+              <tr>
+                <th>路线 / 服务</th>
+                <th id="teacherCol1">车型</th>
+                <th>本月使用</th>
+                <th>计价方式</th>
+                <th>标准报价</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="avatar">🛫</span><strong>JB → 机场 (Senai/KLIA)</strong></td>
+                <td id="teach1">7-seater MPV</td>
+                <td>32 次</td>
+                <td>单程定价</td>
+                <td><strong>RM 80 / RM 350</strong></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">🛣️</span><strong>JB → KL Sentral</strong></td>
+                <td id="teach2">MPV / Hiace</td>
+                <td>18 次</td>
+                <td>单程定价</td>
+                <td><strong>RM 250</strong></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">🏭</span><strong>工厂员工接送 (合约)</strong></td>
+                <td id="teach3">Hiace / 大巴</td>
+                <td>每日</td>
+                <td>月结合约</td>
+                <td><strong>RM 12,000/月</strong></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">🎓</span><strong>包车一日游 (热查尔/海岛)</strong></td>
+                <td id="teach4">7-seater MPV</td>
+                <td>9 次</td>
+                <td>一日定价</td>
+                <td><strong>RM 1,800</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box">
+          💡 <strong>报价永远一致：</strong>所有员工 + 司机看到同一份报价库。客户问 "为什么这次跟上次报不同价？" 再也不会出现。月结客户的累积发票也是从这里来。
+        </div>
+      </div>
+
+      <!-- PAYMENTS -->
+      <div class="page-section" id="page-payments">
+        <div class="page-header">
+          <div>
+            <div class="page-title">客户管理</div>
+            <div class="page-sub">86 个企业客户 · 142 个个人客户 · 本月营业额 RM 52K</div>
+          </div>
+          <div>
+            <button class="btn-secondary">📱 群发 WhatsApp 通知</button>
+            <button class="btn-primary" style="margin-left:8px;">+ 新增客户</button>
+          </div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-label">活跃企业客户</div>
+            <div class="stat-value" style="color:#3a4a6a;">86</div>
+            <div class="stat-trend">本月新增 5 个</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">本月新行程</div>
+            <div class="stat-value" style="color:#c08855;">186</div>
+            <div class="stat-trend">企业 64 · 个人 122</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">月结待收</div>
+            <div class="stat-value" style="color:#a04848;">RM 6,250</div>
+            <div class="stat-trend warn">3 个客户 · 已发提醒</div>
+          </div>
+        </div>
+
+        <div class="data-card">
+          <div class="data-card-header">
+            <div class="data-card-title">⚠ 需要跟进的月结客户</div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>司机</th>
+                <th>金额</th>
+                <th>到期</th>
+                <th>状态</th>
+                <th>动作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="avatar">A</span><strong>ABC Sdn Bhd</strong></td>
+                <td>2027-03-15</td>
+                <td>2026-05-08</td>
+                <td><span class="pill pill-red">病假</span></td>
+                <td><button class="btn-secondary">📱 发提醒</button></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">X</span><strong>XYZ Tours</strong></td>
+                <td>RM 1,800</td>
+                <td>2026-05-20</td>
+                <td><span class="pill pill-orange">调休中</span></td>
+                <td><button class="btn-secondary">📱 发提醒</button></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">王</span><strong>王先生 (旅行团)</strong></td>
+                <td>RM 2,050</td>
+                <td>2026-05-22</td>
+                <td><span class="pill pill-orange">调休中</span></td>
+                <td><button class="btn-secondary">📱 发提醒</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box">
+          💡 <strong>月结客户管理更轻松：</strong>每位客户的过往行程、报价、付款全部档案化。"之前包过 XX 路线吗？多少钱？" 3 秒查到。月结发票自动累积，不用手工汇总。
+        </div>
+      </div>
+
+      <!-- DRIVER MANAGEMENT (was COMMISSION) -->
+      <div class="page-section" id="page-commission">
+        <div class="page-header">
+          <div>
+            <div class="page-title">司机管理</div>
+            <div class="page-sub">12 位司机 · 1 位驾照下月到期 · 1 位健康检查到期</div>
+          </div>
+          <button class="btn-primary">+ 新增司机</button>
+        </div>
+
+        <div class="commission-formula">
+          ⚠️ <strong>证件到期提醒：</strong>系统会在司机驾照、健康检查、保险到期前 30/15/7 天自动提醒。从此不会因为证件过期被罚款或影响保险理赔。
+        </div>
+
+        <div class="data-card">
+          <table>
+            <thead>
+              <tr>
+                <th>司机</th>
+                <th>负责路线</th>
+                <th>本月行程</th>
+                <th>驾照到期</th>
+                <th>健康检查</th>
+                <th>状态</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="avatar">李</span><strong>李师傅</strong></td>
+                <td>机场接送 · 市内</td>
+                <td>32 次</td>
+                <td>2027-03-15</td>
+                <td>2026-08-10</td>
+                <td><span class="pill pill-green">在岗</span></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">王</span><strong>王师傅</strong></td>
+                <td>JB→KL 长途</td>
+                <td>18 次</td>
+                <td>2026-12-20</td>
+                <td>2026-08-10</td>
+                <td><span class="pill pill-green">在岗</span></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">陈</span><strong>陈师傅</strong></td>
+                <td>工厂员工接送</td>
+                <td>22 次</td>
+                <td>2026-06-30</td>
+                <td>2026-11-05</td>
+                <td><span class="pill pill-orange">驾照将到期</span></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">黄</span><strong>黄师傅</strong></td>
+                <td>市内 + 医院接送</td>
+                <td>15 次</td>
+                <td>2027-01-22</td>
+                <td>2026-11-05</td>
+                <td><span class="pill pill-green">在岗</span></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">林</span><strong>林师傅</strong></td>
+                <td>晚班医院接送</td>
+                <td>12 次</td>
+                <td>2026-09-08</td>
+                <td>2026-05-30</td>
+                <td><span class="pill pill-orange">健康检查到期</span></td>
+              </tr>
+              <tr style="background:#f7f3ea;font-weight:600;">
+                <td colspan="5" style="text-align:right;">在岗司机 / 总司机数</td>
+                <td><strong style="color:#3a4a6a;">10 / 12</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box">
+          💡 <strong>证件管理的隐藏价值：</strong>包车业最怕司机驾照过期被罚 + 影响保险理赔。系统提前 30 天提醒您去 renew，从此不再担心。每位司机的健康检查、保险、驾照到期日全部档案化。
+        </div>
+      </div>
+
+      <!-- DRIVER PAYROLL -->
+      <div class="page-section" id="page-portal">
+        <div class="page-header">
+          <div>
+            <div class="page-title">司机工资计算</div>
+            <div class="page-sub">2026 年 5 月 · 自动按行程 + 时数 + 过夜费 + 加班费计算</div>
+          </div>
+          <button class="btn-primary">📥 汇出薪资单</button>
+        </div>
+
+        <div class="commission-formula">
+          🧮 <strong>工资公式：</strong> 司机工资 = 行程基本费 + 加班费 + 过夜费 + 长途津贴　|　每趟行程独立结算，月底自动汇总
+        </div>
+
+        <div class="data-card">
+          <table>
+            <thead>
+              <tr>
+                <th>司机</th>
+                <th>本月行程</th>
+                <th>正常工时</th>
+                <th>加班 / 过夜</th>
+                <th>本月应得</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="avatar">李</span><strong>李师傅</strong></td>
+                <td>32 次 (机场)</td>
+                <td>RM 3,200</td>
+                <td>RM 650</td>
+                <td><strong>RM 3,850</strong></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">王</span><strong>王师傅</strong></td>
+                <td>18 次 (KL 长途)</td>
+                <td>RM 2,800</td>
+                <td>RM 1,200 (过夜 4 次)</td>
+                <td><strong>RM 4,000</strong></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">陈</span><strong>陈师傅</strong></td>
+                <td>22 次 (工厂)</td>
+                <td>RM 2,400</td>
+                <td>RM 280</td>
+                <td><strong>RM 2,680</strong></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">黄</span><strong>黄师傅</strong></td>
+                <td>15 次 (市内)</td>
+                <td>RM 2,000</td>
+                <td>RM 150</td>
+                <td><strong>RM 2,150</strong></td>
+              </tr>
+              <tr style="background:#f7f3ea;font-weight:600;">
+                <td colspan="4" style="text-align:right;">本月总工资支出</td>
+                <td><strong style="color:#3a4a6a;">RM 12,680</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box">
+          💡 <strong>为什么这个对你最重要：</strong>过夜费、加班费一直是包车业最常生争议的地方。系统按行程的实际起讫时间 + 距离自动算，每位司机可以在自己 portal 看每一趟的明细 — <strong>透明 + 不再吵架</strong>。
+        </div>
+      </div>
+
+      <!-- DRIVER PORTAL -->
+      <div class="page-section" id="page-attendance">
+        <div class="page-header">
+          <div>
+            <div class="page-title">司机 Portal</div>
+            <div class="page-sub">司机扫码登入即可查看自己的班表 + 工资 · 不需要下载 App</div>
+          </div>
+        </div>
+
+        <div class="phone-container">
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="phone-header">
+                <div class="phone-greet">您好</div>
+                <div class="phone-name">李师傅 👋</div>
+              </div>
+              <div class="phone-body">
+                <div class="phone-notice">
+                  📢 明天 6:30 AM 机场接送 (Mr. Lee · KLIA)，请准时
+                </div>
+
+                <div class="phone-section-title">本周班表</div>
+
+                <div class="phone-class-card today">
+                  <div class="phone-class-time">📅 今天 · 已完成 2 趟</div>
+                  <div class="phone-class-name">机场接送 + 市内 1 趟</div>
+                  <div class="phone-class-teacher">车辆: JJK 8888</div>
+                </div>
+
+                <div class="phone-class-card">
+                  <div class="phone-class-time">明天 · 6:30 AM</div>
+                  <div class="phone-class-name">JB → KLIA (Mr. Lee)</div>
+                  <div class="phone-class-teacher">单程 · RM 350</div>
+                </div>
+
+                <div class="phone-class-card">
+                  <div class="phone-class-time">周四 · 9 AM - 6 PM</div>
+                  <div class="phone-class-name">XYZ Tours 一日游</div>
+                  <div class="phone-class-teacher">7-seater MPV · RM 1,800</div>
+                </div>
+
+                <div class="phone-section-title" style="margin-top:14px;">本月工资</div>
+                <div class="phone-class-card" style="border-left-color:#3a4a6a;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                      <div class="phone-class-name">5 月预估</div>
+                      <div class="phone-class-teacher">32 次行程 · RM 3,850</div>
+                    </div>
+                    <span class="pill pill-green">明细</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="phone-explain">
+            <h4>司机 Portal 帮您解决的事</h4>
+            <ul>
+              <li><span class="check">✓</span><span><strong>不再被问 "明天我要去哪？"</strong> 司机自己看班表，老板不用一直发 WhatsApp</span></li>
+              <li><span class="check">✓</span><span><strong>不再吵 "这个月工资为什么这么少？"</strong> 司机自己看每趟明细，过夜费/加班费一清二楚</span></li>
+              <li><span class="check">✓</span><span><strong>请假 / 调班通知自动推送</strong> 不用一个一个司机发信息</span></li>
+              <li><span class="check">✓</span><span><strong>不需要下载 App</strong> 扫 QR Code 就能打开</span></li>
+              <li><span class="check">✓</span><span><strong>路线导航直接打开</strong> 行程详情含 Google Maps 链接</span></li>
+              <li><span class="check">✓</span><span><strong>本月行程统计</strong> 司机看到自己的工作量，士气也更好</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer / CTA -->
+  <div class="footer">
+    <h3>想知道您的中心可以怎样使用 TripFlow？</h3>
+    <p>我们提供一对一咨询 · 现场 demo · 免费试用 30 天</p>
+    <button class="btn-primary" onclick="alert('请联络我们：[您的联络方式]')">联络我们 →</button>
+  </div>
+</div>
+
+<script>
+  const industries = {
+    charter: {
+      // Single industry — no switching needed but keep structural pattern.
+      // All values already set in HTML, so this is for completeness only.
+      brandLogo: '绿', brandText: '绿洲包车', brandSub: '车队管理后台'
+    }
+  };
+
+  document.querySelectorAll('.industry-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.industry-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyIndustry(btn.dataset.industry);
+    });
+  });
+
+  function applyIndustry(key) {
+    const cfg = industries[key];
+    if (!cfg) return;
+    for (const id in cfg) {
+      const val = cfg[id];
+      const el = document.getElementById(id);
+      if (!el) continue;
+      if (Array.isArray(val)) {
+        const title = el.querySelector('.sch-event-title');
+        const sub = el.querySelector('.sch-event-sub');
+        if (title) title.textContent = val[0];
+        if (sub) sub.textContent = val[1];
+        el.classList.remove('art', 'music');
+        if (val[2]) el.classList.add(val[2]);
+      } else {
+        el.textContent = val;
+      }
+    }
+  }
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      const page = item.dataset.page;
+      document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById('page-' + page);
+      if (target) {
+        target.classList.add('active');
+        // Scroll to top of main content
+        document.querySelector('.main-content').scrollTop = 0;
+      }
+    });
+  });
+</script>
+</body>
+</html>

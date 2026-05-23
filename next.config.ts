@@ -32,6 +32,9 @@ const config: NextConfig = {
       // EduFlow
       { source: "/eduflow", destination: "/eduflow/index.html" },
       { source: "/eduflow/demo", destination: "/eduflow/demo/index.html" },
+      // TripFlow
+      { source: "/tripflow", destination: "/tripflow/index.html" },
+      { source: "/tripflow/demo", destination: "/tripflow/demo/index.html" },
     ];
   },
 
@@ -52,6 +55,17 @@ const config: NextConfig = {
       },
       {
         source: "/eduflow/demo/:path*",
+        headers: [
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          {
+            key: "Content-Security-Policy",
+            value:
+              "frame-ancestors 'self' https://*.olcc.com.my https://*.vercel.app",
+          },
+        ],
+      },
+      {
+        source: "/tripflow/demo/:path*",
         headers: [
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           {

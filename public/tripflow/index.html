@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TripFlow · 让包车老板从 Excel 和白板调度解脱出来 | OLCC</title>
+<meta name="description" content="TripFlow 是为包车公司、车队、旅游运输打造的管理系统。调度、报价、司机工资、客户沟通 — 一个系统全部搞定。新马本地团队。">
+<meta name="keywords" content="包车公司管理系统, 车队管理, Singapore Malaysia charter company software, 新马包车系统, TripFlow, OLCC, 司机工资计算, 包车调度">
+
+<!-- Open Graph -->
+<meta property="og:title" content="TripFlow · 包车公司管理系统">
+<meta property="og:description" content="让包车老板从 Excel 和白板调度解脱出来。为车队、旅游运输量身打造。">
+<meta property="og:type" content="website">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #faf7f2;
+  --bg-warm: #f3eee4;
+  --bg-darker: #e8e0d3;
+  --ink: #2d3a2e;
+  --ink-soft: #4a5a4d;
+  --sage: #3a4a6a;        /* Primary accent — navy (fleet industry) */
+  --sage-deep: #283450;   /* Hover/active navy */
+  --sage-light: #d3d9e5;  /* Light navy for pills, highlights */
+  --sage-tint: #ebeef4;   /* Lightest navy tint for backgrounds */
+  --gold: #c08855;
+  --gold-warm: #d4a85a;
+  --gold-tint: #fdf6e3;
+  --paper: #ffffff;
+  --muted: #6b7568;
+  --whisper: #a89878;
+  --line: #e2d9c4;
+  --danger: #a04848;
+
+  --serif: 'Fraunces', 'Noto Serif SC', Georgia, serif;
+  --sans: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+
+  --max: 1280px;
+  --pad: clamp(20px, 4vw, 56px);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+  font-size: 16px;
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; }
+
+/* ========== Grain overlay ========== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+}
+
+/* ========== Nav ========== */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 16px var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(250, 247, 242, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s var(--ease);
+}
+.nav.scrolled { border-bottom-color: var(--line); }
+.nav-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--sage-deep);
+  letter-spacing: -0.02em;
+}
+.nav-tag {
+  font-size: 11px;
+  color: var(--whisper);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: none;
+}
+@media (min-width: 720px) {
+  .nav-tag { display: block; }
+}
+.nav-links {
+  display: none;
+  gap: 32px;
+  align-items: center;
+}
+@media (min-width: 920px) {
+  .nav-links { display: flex; }
+}
+.nav-links a {
+  font-size: 14px;
+  color: var(--ink-soft);
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--sage-deep); }
+.nav-cta {
+  background: var(--ink);
+  color: var(--bg);
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.25s var(--ease);
+}
+.nav-cta:hover {
+  background: var(--sage-deep);
+  transform: translateY(-1px);
+}
+
+/* ========== Container ========== */
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+/* ========== Hero ========== */
+.hero {
+  padding: 140px var(--pad) 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-grid {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 60px;
+  align-items: center;
+}
+@media (min-width: 960px) {
+  .hero-grid {
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 80px;
+  }
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: var(--sage-tint);
+  color: var(--sage-deep);
+  border: 1px solid var(--sage-light);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.7s var(--ease) 0.1s forwards;
+}
+.eyebrow-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--sage);
+  box-shadow: 0 0 0 3px rgba(90,122,95,0.2);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(90,122,95,0.2); }
+  50% { box-shadow: 0 0 0 6px rgba(90,122,95,0); }
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(38px, 6.5vw, 76px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease) 0.2s forwards;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--sage-deep);
+  font-weight: 500;
+  position: relative;
+}
+.hero h1 em::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 6px;
+  background: var(--gold-warm);
+  opacity: 0.4;
+  z-index: -1;
+  transform: skewX(-3deg);
+}
+.hero-sub {
+  font-size: 18px;
+  color: var(--ink-soft);
+  margin-bottom: 36px;
+  max-width: 540px;
+  line-height: 1.7;
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease) 0.35s forwards;
+}
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease) 0.5s forwards;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 16px 28px;
+  border-radius: 100px;
+  font-weight: 500;
+  font-size: 15px;
+  transition: all 0.25s var(--ease);
+}
+.btn-primary:hover {
+  background: var(--sage-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px -8px rgba(45,58,46,0.35);
+}
+.btn-primary .arrow { transition: transform 0.25s var(--ease); }
+.btn-primary:hover .arrow { transform: translateX(4px); }
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  padding: 16px 24px;
+  border-radius: 100px;
+  font-weight: 500;
+  font-size: 15px;
+  border: 1px solid var(--line);
+  transition: all 0.2s;
+  background: var(--paper);
+}
+.btn-ghost:hover {
+  border-color: var(--ink);
+  background: var(--bg-warm);
+}
+
+/* Hero stats */
+.hero-stats {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease) 0.65s forwards;
+}
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+}
+.hero-stat-num {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--sage-deep);
+  line-height: 1;
+}
+.hero-stat-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+  letter-spacing: 0.02em;
+}
+
+/* Hero visual - dashboard preview */
+.hero-visual {
+  position: relative;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease) 0.4s forwards;
+}
+.dashboard-card {
+  background: var(--paper);
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  box-shadow:
+    0 4px 6px -2px rgba(45,58,46,0.04),
+    0 30px 60px -20px rgba(45,58,46,0.18);
+  overflow: hidden;
+  position: relative;
+  transform: rotate(-1deg);
+  transition: transform 0.6s var(--ease);
+}
+.dashboard-card:hover { transform: rotate(0deg) translateY(-4px); }
+.dash-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg);
+}
+.dash-dots { display: flex; gap: 6px; }
+.dash-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--bg-darker); }
+.dash-dot:nth-child(1) { background: #e8a87c; }
+.dash-dot:nth-child(2) { background: #d4a85a; }
+.dash-dot:nth-child(3) { background: var(--sage); }
+.dash-url {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  background: var(--bg-warm);
+  padding: 4px 12px;
+  border-radius: 100px;
+}
+.dash-body { padding: 22px; }
+.dash-greet {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.dash-greet-sub { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+.dash-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.dash-stat {
+  padding: 12px;
+  background: var(--bg);
+  border-radius: 10px;
+  border: 1px solid var(--line);
+}
+.dash-stat-l { font-size: 10px; color: var(--whisper); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.dash-stat-v {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.dash-stat-t {
+  font-size: 10px;
+  color: var(--sage);
+  margin-top: 4px;
+}
+.dash-stat-t.warn { color: var(--gold); }
+.dash-list-title {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.dash-todo {
+  padding: 10px 12px;
+  background: var(--bg);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--ink);
+}
+.dash-todo-icon {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  background: var(--sage-tint);
+  color: var(--sage-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.dash-todo-pill {
+  margin-left: auto;
+  padding: 2px 8px;
+  background: var(--sage-tint);
+  color: var(--sage-deep);
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 500;
+}
+.dash-todo-pill.warn { background: var(--gold-tint); color: var(--gold); }
+
+/* Floating accent cards */
+.float-card {
+  position: absolute;
+  z-index: 3;
+  background: var(--paper);
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow:
+    0 4px 6px -2px rgba(45,58,46,0.06),
+    0 20px 40px -10px rgba(45,58,46,0.15);
+  border: 1px solid var(--line);
+  font-size: 13px;
+  display: none;
+}
+@media (min-width: 960px) {
+  .float-card { display: flex; align-items: center; gap: 10px; }
+}
+.float-card-1 {
+  top: -16px;
+  left: -32px;
+  animation: floatA 6s ease-in-out infinite;
+}
+.float-card-2 {
+  bottom: 36px;
+  right: -28px;
+  animation: floatB 7s ease-in-out infinite;
+}
+@keyframes floatA {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes floatB {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+.float-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: var(--sage-tint);
+  color: var(--sage-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.float-text { line-height: 1.3; }
+.float-text strong { color: var(--ink); font-weight: 600; display: block; }
+.float-text span { color: var(--muted); font-size: 11px; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== Section base ========== */
+.section { padding: 100px var(--pad); position: relative; }
+@media (max-width: 720px) { .section { padding: 70px var(--pad); } }
+
+.section-head {
+  max-width: var(--max);
+  margin: 0 auto 64px;
+  text-align: center;
+}
+.section-eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--sage-deep);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(30px, 4.5vw, 52px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+.section-title em {
+  font-style: italic;
+  color: var(--sage-deep);
+  font-weight: 500;
+}
+.section-lede {
+  font-size: 18px;
+  color: var(--ink-soft);
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+/* ========== Pain points section ========== */
+.pain {
+  background: var(--bg-warm);
+  position: relative;
+}
+.pain-grid {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+}
+@media (min-width: 800px) {
+  .pain-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+}
+.pain-card {
+  background: var(--paper);
+  border-radius: 20px;
+  padding: 36px;
+  border: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s var(--ease);
+}
+.pain-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px -20px rgba(45,58,46,0.2);
+  border-color: var(--sage-light);
+}
+.pain-card.before { border-left: 4px solid var(--danger); }
+.pain-card.after { border-left: 4px solid var(--sage); background: linear-gradient(180deg, var(--paper), var(--sage-tint)); }
+.pain-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 18px;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.pain-card.before .pain-label { background: #fbecec; color: var(--danger); }
+.pain-card.after .pain-label { background: var(--sage-light); color: var(--sage-deep); }
+.pain-card h3 {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.pain-list { list-style: none; }
+.pain-list li {
+  padding: 10px 0 10px 28px;
+  border-bottom: 1px dashed var(--line);
+  font-size: 15px;
+  color: var(--ink-soft);
+  position: relative;
+  line-height: 1.5;
+}
+.pain-list li:last-child { border-bottom: none; }
+.pain-list li::before {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  font-weight: 600;
+}
+.pain-card.before .pain-list li::before {
+  content: '✕';
+  color: var(--danger);
+}
+.pain-card.after .pain-list li::before {
+  content: '✓';
+  color: var(--sage);
+}
+
+/* ========== Demo preview section ========== */
+.demo {
+  background: var(--ink);
+  color: var(--bg);
+  overflow: hidden;
+  position: relative;
+}
+.demo::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(212,168,90,0.08), transparent 70%);
+  pointer-events: none;
+}
+.demo .section-eyebrow { color: var(--gold-warm); }
+.demo .section-title { color: var(--bg); }
+.demo .section-lede { color: rgba(250,247,242,0.7); }
+.demo-frame-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+.demo-tabs {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.demo-tab {
+  padding: 9px 18px;
+  border-radius: 100px;
+  font-size: 13px;
+  color: rgba(250,247,242,0.6);
+  background: rgba(250,247,242,0.05);
+  border: 1px solid rgba(250,247,242,0.12);
+  transition: all 0.2s;
+  font-family: var(--sans);
+}
+.demo-tab:hover { color: var(--bg); background: rgba(250,247,242,0.1); }
+.demo-tab.active {
+  background: var(--gold-warm);
+  border-color: var(--gold-warm);
+  color: var(--ink);
+  font-weight: 500;
+}
+.demo-frame {
+  background: var(--paper);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 60px -15px rgba(0,0,0,0.4),
+    0 0 0 1px rgba(250,247,242,0.08);
+  aspect-ratio: 16 / 10;
+  position: relative;
+}
+.demo-frame iframe {
+  width: 100%; height: 100%; border: 0;
+}
+.demo-frame-placeholder {
+  width: 100%; height: 100%;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  color: var(--ink);
+  text-align: center;
+  padding: 40px;
+}
+.demo-frame-placeholder .icon {
+  width: 64px; height: 64px;
+  background: var(--sage-tint);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+.demo-frame-placeholder p { color: var(--muted); max-width: 400px; }
+.demo-cta { text-align: center; margin-top: 36px; }
+.demo-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg);
+  color: var(--ink);
+  padding: 16px 32px;
+  border-radius: 100px;
+  font-weight: 500;
+  font-size: 15px;
+  transition: all 0.25s var(--ease);
+}
+.demo-cta-btn:hover {
+  background: var(--gold-warm);
+  transform: translateY(-2px);
+}
+
+/* ========== Features section ========== */
+.features-grid {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 720px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1080px) { .features-grid { grid-template-columns: repeat(4, 1fr); } }
+.feature {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 24px;
+  transition: all 0.3s var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+.feature::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: var(--sage);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease);
+}
+.feature:hover {
+  border-color: var(--sage-light);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px -16px rgba(45,58,46,0.18);
+}
+.feature:hover::before { transform: scaleX(1); }
+.feature-num {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--whisper);
+  margin-bottom: 18px;
+  letter-spacing: 0.03em;
+}
+.feature-icon {
+  font-size: 28px;
+  margin-bottom: 18px;
+}
+.feature h4 {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.feature p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+/* ========== Pricing section ========== */
+.pricing {
+  background: linear-gradient(180deg, var(--bg), var(--bg-warm));
+}
+.pricing-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 880px) {
+  .pricing-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+}
+.tier {
+  background: var(--paper);
+  border-radius: 20px;
+  padding: 36px 28px;
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s var(--ease);
+  position: relative;
+}
+.tier:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px -20px rgba(45,58,46,0.18);
+}
+.tier.featured {
+  background: linear-gradient(180deg, #fff, #f6fbf6);
+  border-color: var(--sage);
+  border-width: 2px;
+  box-shadow: 0 20px 50px -20px rgba(90,122,95,0.3);
+}
+@media (min-width: 880px) {
+  .tier.featured { transform: scale(1.04); }
+  .tier.featured:hover { transform: scale(1.04) translateY(-4px); }
+}
+.tier-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gold-warm);
+  color: var(--ink);
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+.tier-name {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.tier-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+.tier-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+.tier-price-num {
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.tier.featured .tier-price-num { color: var(--sage-deep); }
+.tier-price-unit { color: var(--muted); font-size: 14px; }
+.tier-setup {
+  font-size: 13px;
+  color: var(--whisper);
+  font-style: italic;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.tier-features { list-style: none; margin-bottom: 28px; flex: 1; }
+.tier-features li {
+  padding: 8px 0 8px 24px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  position: relative;
+  line-height: 1.5;
+}
+.tier-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  color: var(--sage);
+  font-weight: 600;
+}
+.tier-features li.dimmed { color: var(--whisper); }
+.tier-features li.dimmed::before { content: '—'; color: var(--whisper); }
+.tier-btn {
+  display: block;
+  text-align: center;
+  padding: 14px;
+  border-radius: 100px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s;
+  border: 1px solid var(--ink);
+}
+.tier-btn.outline {
+  color: var(--ink);
+  background: transparent;
+}
+.tier-btn.outline:hover { background: var(--ink); color: var(--bg); }
+.tier-btn.solid {
+  background: var(--ink);
+  color: var(--bg);
+}
+.tier-btn.solid:hover {
+  background: var(--sage-deep);
+  border-color: var(--sage-deep);
+}
+
+.pricing-note {
+  text-align: center;
+  margin-top: 36px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.pricing-note strong { color: var(--ink); }
+
+/* ========== Cases section ========== */
+.cases-grid {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 800px) { .cases-grid { grid-template-columns: repeat(3, 1fr); } }
+.case {
+  padding: 36px 32px;
+  background: var(--paper);
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.case::before {
+  content: '"';
+  position: absolute;
+  top: -20px;
+  right: 16px;
+  font-family: var(--serif);
+  font-size: 140px;
+  color: var(--sage-tint);
+  line-height: 1;
+}
+.case-quote {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ink);
+  margin-bottom: 28px;
+  position: relative;
+  flex: 1;
+  font-weight: 500;
+}
+.case-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.case-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--sage-light);
+  color: var(--sage-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.case-info { line-height: 1.4; }
+.case-name { font-weight: 600; color: var(--ink); font-size: 14px; }
+.case-role { font-size: 12px; color: var(--muted); }
+
+/* ========== FAQ ========== */
+.faq {
+  background: var(--bg-warm);
+}
+.faq-wrap { max-width: 820px; margin: 0 auto; }
+.faq-item {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: all 0.25s;
+}
+.faq-item:hover { border-color: var(--sage-light); }
+.faq-item[open] { border-color: var(--sage); }
+.faq-q {
+  padding: 22px 26px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  list-style: none;
+}
+.faq-q::-webkit-details-marker { display: none; }
+.faq-q::after {
+  content: '+';
+  font-family: var(--serif);
+  font-size: 28px;
+  color: var(--sage);
+  transition: transform 0.3s var(--ease);
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: -4px;
+}
+.faq-item[open] .faq-q::after {
+  content: '–';
+  transform: rotate(180deg);
+}
+.faq-a {
+  padding: 0 26px 22px;
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ========== CTA ========== */
+.cta-section {
+  padding: 120px var(--pad);
+  background: var(--ink);
+  color: var(--bg);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(212,168,90,0.1), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(90,122,95,0.15), transparent 50%);
+}
+.cta-inner { position: relative; max-width: 720px; margin: 0 auto; }
+.cta-eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--gold-warm);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 24px;
+}
+.cta-section h2 {
+  font-family: var(--serif);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  color: var(--bg);
+}
+.cta-section h2 em { font-style: italic; color: var(--gold-warm); font-weight: 500; }
+.cta-section p {
+  font-size: 18px;
+  color: rgba(250,247,242,0.75);
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+.cta-buttons {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.cta-buttons .btn-primary {
+  background: var(--bg);
+  color: var(--ink);
+}
+.cta-buttons .btn-primary:hover {
+  background: var(--gold-warm);
+  color: var(--ink);
+}
+.cta-buttons .btn-ghost {
+  background: transparent;
+  color: var(--bg);
+  border-color: rgba(250,247,242,0.3);
+}
+.cta-buttons .btn-ghost:hover {
+  border-color: var(--bg);
+  background: rgba(250,247,242,0.06);
+}
+
+/* ========== Footer ========== */
+.foot {
+  padding: 60px var(--pad) 36px;
+  background: #1d2620;
+  color: rgba(250,247,242,0.5);
+  font-size: 13px;
+}
+.foot-grid {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(250,247,242,0.08);
+}
+@media (min-width: 760px) {
+  .foot-grid { grid-template-columns: 2fr 1fr 1fr; }
+}
+.foot-brand h4 {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--bg);
+  margin-bottom: 12px;
+}
+.foot-brand p { max-width: 320px; line-height: 1.7; }
+.foot h5 {
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  letter-spacing: 0.03em;
+}
+.foot ul { list-style: none; }
+.foot ul li { margin-bottom: 10px; }
+.foot ul a { transition: color 0.2s; }
+.foot ul a:hover { color: var(--gold-warm); }
+.foot-bottom {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+}
+.foot-bottom .powered {
+  color: rgba(250,247,242,0.4);
+}
+.foot-bottom .powered strong {
+  color: var(--gold-warm);
+  font-weight: 500;
+}
+
+/* ========== Scroll reveals ========== */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* WhatsApp floating button */
+.wa-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #25d366;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 100px;
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s var(--ease);
+}
+.wa-float:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(37,211,102,0.5); }
+.wa-float svg { width: 18px; height: 18px; fill: currentColor; }
+@media (max-width: 540px) {
+  .wa-float { padding: 12px 14px; }
+  .wa-float .wa-text { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav class="nav" id="nav">
+  <div class="nav-brand">
+    <a href="#" class="nav-logo">TripFlow</a>
+    <span class="nav-tag">by OLCC</span>
+  </div>
+  <div class="nav-links">
+    <a href="#features">功能</a>
+    <a href="#demo">线上 Demo</a>
+    <a href="#pricing">方案</a>
+    <a href="#cases">案例</a>
+    <a href="#faq">常见问题</a>
+  </div>
+  <a href="#contact" class="nav-cta">预约展示 →</a>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        专为新马包车公司打造  ·  Singapore &amp; Malaysia
+      </div>
+      <h1>
+        让包车老板从 Excel 和 <em>白板调度</em><br>解脱出来
+      </h1>
+      <p class="hero-sub">
+        TripFlow 是一个为包车公司、车队、旅游运输量身打造的管理系统。行程调度、报价、司机工资、车辆成本 — 一个系统全部搞定。
+      </p>
+      <div class="hero-cta">
+        <a href="#demo" class="btn-primary">
+          看 5 分钟 Demo
+          <span class="arrow">→</span>
+        </a>
+        <a href="#pricing" class="btn-ghost">
+          查看方案
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">多车型</div>
+          <div class="hero-stat-label">MPV · 面包车 · 大巴</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">8 模块</div>
+          <div class="hero-stat-label">从调度到客户 Portal</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-label">中文界面 + 本地支援</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="float-card float-card-1">
+        <div class="float-icon">✓</div>
+        <div class="float-text">
+          <strong>司机工资已自动算好</strong>
+          <span>李师傅 · RM 3,850</span>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dash-header">
+          <div class="dash-dots">
+            <div class="dash-dot"></div>
+            <div class="dash-dot"></div>
+            <div class="dash-dot"></div>
+          </div>
+          <div class="dash-url">绿洲包车.tripflow.com</div>
+        </div>
+        <div class="dash-body">
+          <div class="dash-greet">早安，陈老板 👋</div>
+          <div class="dash-greet-sub">这是今天的绿洲包车概况</div>
+          <div class="dash-stats">
+            <div class="dash-stat">
+              <div class="dash-stat-l">本月行程</div>
+              <div class="dash-stat-v">186</div>
+              <div class="dash-stat-t">↑ +24 趟</div>
+            </div>
+            <div class="dash-stat">
+              <div class="dash-stat-l">月营业额</div>
+              <div class="dash-stat-v">RM 52K</div>
+              <div class="dash-stat-t">88% 已收</div>
+            </div>
+            <div class="dash-stat">
+              <div class="dash-stat-l">未收账款</div>
+              <div class="dash-stat-v">RM 6.2K</div>
+              <div class="dash-stat-t warn">⚠ 3 客户</div>
+            </div>
+            <div class="dash-stat">
+              <div class="dash-stat-l">今日行程</div>
+              <div class="dash-stat-v">9</div>
+              <div class="dash-stat-t">7 位司机</div>
+            </div>
+          </div>
+          <div class="dash-list-title">今日待办</div>
+          <div class="dash-todo">
+            <div class="dash-todo-icon">🚐</div>
+            <div>新山 → 樟宜机场 · 6:30 AM · 李师傅</div>
+            <div class="dash-todo-pill">即将出发</div>
+          </div>
+          <div class="dash-todo">
+            <div class="dash-todo-icon">⚠️</div>
+            <div>明天 3 辆同时出车，1 位司机调休</div>
+            <div class="dash-todo-pill warn">待协调</div>
+          </div>
+          <div class="dash-todo">
+            <div class="dash-todo-icon">💰</div>
+            <div>本月司机工资已自动算好</div>
+            <div class="dash-todo-pill">就绪</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="float-card float-card-2">
+        <div class="float-icon">📱</div>
+        <div class="float-text">
+          <strong>司机看自己工资明细</strong>
+          <span>李师傅刚查看</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PAIN POINTS ========== -->
+<section class="pain section">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">您是不是也遇到这些？</div>
+    <h2 class="section-title">每天<em>耗在协调和算账</em>上</h2>
+    <p class="section-lede">如果您正在经营一间包车公司，这些场景应该再熟悉不过。TripFlow 就是来终结它们的。</p>
+  </div>
+
+  <div class="pain-grid">
+    <div class="pain-card before reveal">
+      <span class="pain-label">您现在的痛</span>
+      <h3>调度像在玩拼图</h3>
+      <ul class="pain-list">
+        <li>调度靠 WhatsApp + 白板，常冲突或漏接（同一辆车双重 booking）</li>
+        <li>司机换班/调休难安排，多辆同时出车时难协调</li>
+        <li>报价靠口头 + 记忆，同样路线不同司机报不同价</li>
+        <li>司机工资难算 — 折返、过夜、加班费常生争议</li>
+        <li>月底对账时司机来问 "我这趟有没有算到？"，自己也忘了</li>
+        <li>客户问 "你们之前包过 XX 路线对吗？多少钱？"，要翻一堆 WhatsApp</li>
+      </ul>
+    </div>
+
+    <div class="pain-card after reveal">
+      <span class="pain-label">TripFlow 帮您</span>
+      <h3>把车队变成精准的机器</h3>
+      <ul class="pain-list">
+        <li>调度看板一目了然，哪辆车哪个时段已 booked 自动锁定，不会重复</li>
+        <li>司机排班 + 调休一键安排，多车出动时系统帮您协调</li>
+        <li>标准化路线报价库，同样行程报价永远一致</li>
+        <li>司机工资按行程 + 时数 + 过夜费 + 加班费自动算，分钟级出报表</li>
+        <li>每位司机 portal 自己看每趟工资明细，不再来问</li>
+        <li>路线报价历史 + 客户行程历史 全部档案化，3 秒查到</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DEMO ========== -->
+<section class="demo section" id="demo">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">Live Demo · 立即试用</div>
+    <h2 class="section-title">不用注册，<em>直接打开看</em></h2>
+    <p class="section-lede">点击下方查看完整 demo。3 个行业自由切换，8 个模块全部能点。这就是您未来每天会用的系统。</p>
+  </div>
+
+  <div class="demo-frame-wrap reveal">
+    <div class="demo-tabs">
+      <button class="demo-tab active">🚐 包车公司 demo</button>
+    </div>
+    <div class="demo-frame">
+      <div class="demo-frame-placeholder">
+        <div class="icon">🖥️</div>
+        <h3 style="font-family: var(--serif); font-size: 24px; color: var(--ink); font-weight: 600;">完整互动 Demo</h3>
+        <p>点击下方按钮在新窗口打开 demo（推荐手机/桌面浏览）。可点击 8 个模块、查看客户 portal 手机版界面。</p>
+        <a href="https://olcc-product-sites.vercel.app/tripflow/demo" target="_blank" class="btn-primary" style="background: var(--ink); color: var(--bg);">
+          打开 Demo
+          <span class="arrow">↗</span>
+        </a>
+      </div>
+    </div>
+    <div class="demo-cta">
+      <a href="#contact" class="demo-cta-btn">
+        想要一对一讲解？预约 30 分钟
+        <span>→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURES ========== -->
+<section class="section" id="features">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">八大核心模块</div>
+    <h2 class="section-title">您每天会用的，<em>全部内建</em></h2>
+    <p class="section-lede">不是通用 SaaS 硬塞进来。每个模块都是为包车公司的实际工作流程设计。</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature reveal"><div class="feature-num">01</div><div class="feature-icon">📊</div><h4>调度仪表盘</h4><p>早上一开就看见今天所有行程、可用车辆、待办事项。30 秒掌握车队状况。</p></div>
+    <div class="feature reveal"><div class="feature-num">02</div><div class="feature-icon">🚐</div><h4>行程调度</h4><p>拖拉式分配车辆 + 司机，自动检测时段冲突。一辆车不会被重复 booking。</p></div>
+    <div class="feature reveal"><div class="feature-num">03</div><div class="feature-icon">📅</div><h4>司机排班 + 调休</h4><p>司机班表 + 休假一目了然。多辆同时出车时，系统帮您找最合适的司机组合。</p></div>
+    <div class="feature reveal"><div class="feature-num">04</div><div class="feature-icon">📋</div><h4>报价管理</h4><p>标准路线 + 车型报价库，新报价 30 秒生成。月结客户自动累积发票。</p></div>
+    <div class="feature reveal"><div class="feature-num">05</div><div class="feature-icon">👤</div><h4>客户 + 行程历史</h4><p>每位客户的过往行程、报价、付款状态档案化。"之前包过吗？" 3 秒查到。</p></div>
+    <div class="feature reveal"><div class="feature-num">06</div><div class="feature-icon">👨‍✈️</div><h4>司机管理</h4><p>每位司机的执照、驾照到期、行程记录、工资历史全部档案化。</p></div>
+    <div class="feature reveal"><div class="feature-num">07</div><div class="feature-icon">💰</div><h4>司机工资计算</h4><p>按行程 + 时数 + 过夜费 + 加班费自动算。月底分钟级出报表，不再吵架。</p></div>
+    <div class="feature reveal"><div class="feature-num">08</div><div class="feature-icon">📱</div><h4>司机 Portal</h4><p>每位司机扫码登入看自己的班表、行程详情、本月工资明细 — 不再来问。</p></div>
+  </div>
+</section>
+
+<!-- ========== PRICING ========== -->
+<section class="pricing section" id="pricing">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">透明定价</div>
+    <h2 class="section-title">选择<em>适合您规模</em>的方案</h2>
+    <p class="section-lede">所有方案都包含 hosting、域名、SSL 证书、每日备份和 8 大核心模块。Setup 费用一次性，月费起算。</p>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="tier reveal">
+      <div class="tier-name">Starter</div>
+      <div class="tier-sub">适合 1-3 辆车 · 老板 + 1-2 司机</div>
+      <div class="tier-price">
+        <span class="tier-price-num">RM 180</span>
+        <span class="tier-price-unit">/月</span>
+      </div>
+      <div class="tier-setup">Setup 一次性 RM 1,800</div>
+      <ul class="tier-features">
+        <li>8 大核心模块</li>
+        <li>司机 Portal</li>
+        <li>Hosting + 域名 + SSL</li>
+        <li>每日自动备份</li>
+        <li>WhatsApp 客服支援</li>
+        <li class="dimmed">月结客户自动发票</li>
+        <li class="dimmed">多车队管理</li>
+        <li class="dimmed">客制开发</li>
+      </ul>
+      <a href="#contact" class="tier-btn outline">了解更多</a>
+    </div>
+
+    <div class="tier featured reveal">
+      <div class="tier-badge">⭐ 最受欢迎</div>
+      <div class="tier-name">Professional</div>
+      <div class="tier-sub">适合 5-15 辆车 · 多车型 + 调度员</div>
+      <div class="tier-price">
+        <span class="tier-price-num">RM 320</span>
+        <span class="tier-price-unit">/月</span>
+      </div>
+      <div class="tier-setup">Setup 一次性 RM 3,500 · 首月免费</div>
+      <ul class="tier-features">
+        <li>8 大核心模块</li>
+        <li>司机 Portal · 客户行程历史</li>
+        <li>Hosting + 域名 + SSL</li>
+        <li>每日自动备份</li>
+        <li>月结客户自动累积发票</li>
+        <li>司机排班 + 调休协调</li>
+        <li>最多 2 个车队/分公司</li>
+        <li>自定义报表 · 优先客服</li>
+      </ul>
+      <a href="#contact" class="tier-btn solid">开始 30 天试用</a>
+    </div>
+
+    <div class="tier reveal">
+      <div class="tier-name">Enterprise</div>
+      <div class="tier-sub">适合 15+ 辆车 · 多分公司 · 想客制</div>
+      <div class="tier-price">
+        <span class="tier-price-num">RM 580</span>
+        <span class="tier-price-unit">/月 起</span>
+      </div>
+      <div class="tier-setup">Setup 一次性 RM 6,000 起</div>
+      <ul class="tier-features">
+        <li>Professional 所有功能</li>
+        <li>无限车队/分公司</li>
+        <li>白标 (您的品牌名)</li>
+        <li>客制开发</li>
+        <li>专属经理</li>
+        <li>会计系统 API 整合</li>
+        <li>优先功能开发</li>
+        <li>SLA 保证</li>
+      </ul>
+      <a href="#contact" class="tier-btn outline">联络我们</a>
+    </div>
+  </div>
+
+  <div class="pricing-note">
+    💡 <strong>年付 9 折</strong> · 相等于一年送您一个多月。同时锁定一年价格，未来涨价不受影响。
+  </div>
+</section>
+
+<!-- ========== CASES ========== -->
+<section class="section" id="cases">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">真实案例</div>
+    <h2 class="section-title">已经在用<em>TripFlow 的包车公司</em></h2>
+    <p class="section-lede">不是 demo 假数据，是真实在运作的车队。我们的团队也在用，所以系统的每一个细节都是经过实战的。</p>
+  </div>
+
+  <div class="cases-grid">
+    <div class="case reveal">
+      <div class="case-quote">
+        以前调度要靠白板 + WhatsApp，经常一辆车被重复 booked。现在系统帮我看冲突，再也没出过乱。多辆车同时出动也容易协调，司机调休也清楚。
+      </div>
+      <div class="case-author">
+        <div class="case-avatar">[徽]</div>
+        <div class="case-info">
+          <div class="case-name">[Pilot 客户 1 · 包车公司]</div>
+          <div class="case-role">[城镇] · 老板</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case reveal">
+      <div class="case-quote">
+        司机以前总是为加班费、过夜费跟我争。现在每个人 portal 自己看每趟实际工资，怎么算的一清二楚。月底再也不用熬夜核对。
+      </div>
+      <div class="case-author">
+        <div class="case-avatar">[徽]</div>
+        <div class="case-info">
+          <div class="case-name">[Pilot 客户 2 · 车队]</div>
+          <div class="case-role">[城镇] · 调度主管</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case reveal">
+      <div class="case-quote">
+        最有用是报价库。以前客户问 "上次包 KL 多少钱？" 要翻一堆 WhatsApp。现在 3 秒查到，报价永远一致，不会同一个客户不同司机报不同价。
+      </div>
+      <div class="case-author">
+        <div class="case-avatar">[徽]</div>
+        <div class="case-info">
+          <div class="case-name">[Pilot 客户 3 · 旅游运输]</div>
+          <div class="case-role">[城镇] · 创办人</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="faq section" id="faq">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">常见问题</div>
+    <h2 class="section-title">您可能<em>想知道的</em></h2>
+  </div>
+
+  <div class="faq-wrap reveal">
+    <details class="faq-item">
+      <summary class="faq-q">司机不太懂电脑/不会用 app 怎么办？</summary>
+      <div class="faq-a">TripFlow 是为本地包车公司打造的，界面全中文、设计直觉。司机的常用功能只有 3 个 — 看今天的行程、签到/签退、看自己工资。培训 1 小时就能上手。如果之后有问题，我们 WhatsApp 教。</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">现有的客户名单、行程记录、Excel 怎么办？</summary>
+      <div class="faq-a">我们的服务包含数据搬迁。您给我们现有的 Excel 或纸本资料 — 客户名单、车辆资料、司机档案、过往行程 — 我们帮您整理 + 输入系统。不用您和员工花时间。</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">可以试用一段时间再决定吗？</summary>
+      <div class="faq-a">Professional 方案提供首月免费试用 — Setup 完成后您有 30 天评估。不满意可全额退还 Setup 费用，您只损失搬数据的时间，没有现金损失。</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">数据安全吗？司机和客户隐私会不会被泄露？</summary>
+      <div class="faq-a">数据放在新加坡区的 Supabase 云端（符合 PDPA），每日自动备份。司机只能看到自己的行程，客户只能看到自己的预订。即使我们公司出事，您也能 100% 导出所有数据。</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">如果用一段时间想停掉怎么办？</summary>
+      <div class="faq-a">月费随时可停，停后我们继续保留您数据 30 天，让您可以完整导出。不会绑约（除非选年付方案）。</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">多辆车同时出动时怎样协调？</summary>
+      <div class="faq-a">这是 TripFlow 的核心强项之一。系统会显示每辆车 + 每位司机的状态（空闲/已 booked/调休），您可以一眼看出哪些组合可行。系统也会自动避免双重 booking — 您拖一辆已经被 book 的车给新行程，系统会立刻提醒。司机调休也输入系统后，调度时直接被排除。</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">有 2 个车队或多间分公司，要买 2 份吗？</summary>
+      <div class="faq-a">不用。Professional 方案支援最多 2 个车队/分公司。Enterprise 方案支援无限。每个车队有自己的车辆、司机、报表，但您一个 login 可以看全部。</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">你们公司在哪里？出事可以找你们吗？</summary>
+      <div class="faq-a">我们的团队就在新马本地（公司注册在马来西亚 Johor Bahru）。WhatsApp 即时回复、必要时上门。这是我们和国外 SaaS 最大的差别。</div>
+    </details>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="cta-section" id="contact">
+  <div class="cta-inner reveal">
+    <div class="cta-eyebrow">下一步</div>
+    <h2>让我们花 <em>30 分钟</em>，<br>聊聊您车队的状况</h2>
+    <p>免费咨询 · 不绑约 · 现场或线上 demo 任您选</p>
+    <div class="cta-buttons">
+      <a href="https://wa.me/60165789873?text=Hi，我想了解 TripFlow" class="btn-primary">
+        WhatsApp 我们
+        <span class="arrow">→</span>
+      </a>
+      <a href="https://olcc-product-sites.vercel.app/tripflow/demo" target="_blank" class="btn-ghost">
+        先看 demo
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="foot">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <h4>TripFlow</h4>
+      <p>为包车公司、车队、旅游运输量身打造的管理系统。让包车老板从 Excel 和白板调度解脱出来。</p>
+    </div>
+    <div>
+      <h5>产品</h5>
+      <ul>
+        <li><a href="#features">核心功能</a></li>
+        <li><a href="#demo">线上 Demo</a></li>
+        <li><a href="#pricing">定价方案</a></li>
+        <li><a href="#cases">客户案例</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>联络</h5>
+      <ul>
+        <li>WhatsApp: +60 16-578 9873</li>
+        <li>Email: ongcheongwei@yesteaching.com</li>
+        <li>Johor Bahru, Malaysia</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div>© 2026 OLCC Technology Sdn. Bhd. All rights reserved.</div>
+    <div class="powered">TripFlow is a product of <strong>OLCC</strong></div>
+  </div>
+</footer>
+
+<!-- WhatsApp floating -->
+<a href="https://wa.me/60165789873?text=Hi，我想了解 TripFlow" class="wa-float" target="_blank">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span class="wa-text">联络我们</span>
+</a>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Demo tabs (visual only - in production these would swap content/iframe URL)
+  document.querySelectorAll('.demo-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.demo-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

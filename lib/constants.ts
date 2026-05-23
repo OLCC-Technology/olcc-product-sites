@@ -25,4 +25,16 @@ export const PRODUCTS = {
     tagline: "洗车中心管理系统",
     subdomain: "carwashflow.olcc.com.my",
   },
+  eduflow: {
+    slug: "eduflow",
+    name: "EduFlow",
+    tagline: "教育中心 / 艺术中心管理系统",
+    subdomain: "eduflow.olcc.com.my",
+  },
+  tripflow: {
+    slug: "tripflow",
+    name: "TripFlow",
+    tagline: "包车 / 车队 / 旅游运输管理系统",
+    subdomain: "tripflow.olcc.com.my",
+  },
 } as const;
