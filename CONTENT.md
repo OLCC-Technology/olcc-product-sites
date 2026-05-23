@@ -18,18 +18,25 @@ Everything a non-developer is likely to change — prices, WhatsApp number, FAQ 
 | Floating WhatsApp btn  | **1603**       | `class="wa-float"`                              |
 | WhatsApp text          | **1590**       | `WhatsApp: +60 16-578 9873`                    |
 | Email                  | **1591**       | `ongcheongwei@yesteaching.com`                  |
-| Demo iframe link       | **1346, 1564** | `demo.olcc.com.my/washflow`  ⚠️ see typo below |
+| "打开 Demo" 按钮链接    | **1346, 1564** | `olcc-product-sites.vercel.app/carwashflow/demo` |
 | Pricing                | search `RM`    | look for `RM 99` / `RM 299` etc.                |
 | FAQ                    | search `FAQ`   | each `<details><summary>` is one question       |
 | Page `<title>` / SEO   | top of `<head>` | `<title>`, `<meta name="description">`         |
 
-### ⚠️ Known typo: demo subdomain path
+### 🔄 When you register `olcc.com.my` and bind `carwashflow.olcc.com.my`
 
-The generated landing currently links to `https://demo.olcc.com.my/washflow` — note the missing `car`. The actual deployed demo will live at `https://carwashflow.olcc.com.my/demo`. Fix both line 1346 and 1564 with a find-and-replace:
+The "打开 Demo" button currently points at the Vercel default URL:
+`https://olcc-product-sites.vercel.app/carwashflow/demo`
+
+Once the custom subdomain is live, do this find-and-replace in `public/carwashflow/index.html`:
 
 ```
-demo.olcc.com.my/washflow   →   carwashflow.olcc.com.my/demo
+https://olcc-product-sites.vercel.app/carwashflow/demo
+  →
+https://carwashflow.olcc.com.my/demo
 ```
+
+(Affects lines 1346 and 1564 — both `<a>` tags with `class="btn-primary"` and `class="btn-ghost"`.)
 
 ---
 
