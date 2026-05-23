@@ -84,8 +84,10 @@ git push                  # Vercel auto-deploys on push to main
 
 Auto-deploys from GitHub `main` branch to Vercel. Preview deploys for every PR.
 
-- **Production:** `main` → `carwashflow.olcc.com.my` (and bare `olcc-product-sites.vercel.app`)
-- **Preview:** any PR → `olcc-product-sites-git-<branch>-olcc-technology.vercel.app`
+Live since 2026-05-23.
+
+- **Production:** `main` → https://olcc-product-sites.vercel.app (custom domain to follow)
+- **Preview:** any PR → `olcc-product-sites-git-<branch>-ongcheongwei-ais-projects.vercel.app`
 
 See [`DEPLOY.md`](./DEPLOY.md) for the one-time GitHub + Vercel setup steps.
 
