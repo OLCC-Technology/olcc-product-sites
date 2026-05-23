@@ -29,6 +29,9 @@ const config: NextConfig = {
       // CarwashFlow
       { source: "/carwashflow", destination: "/carwashflow/index.html" },
       { source: "/carwashflow/demo", destination: "/carwashflow/demo/index.html" },
+      // EduFlow
+      { source: "/eduflow", destination: "/eduflow/index.html" },
+      { source: "/eduflow/demo", destination: "/eduflow/demo/index.html" },
     ];
   },
 
@@ -38,6 +41,17 @@ const config: NextConfig = {
     return [
       {
         source: "/carwashflow/demo/:path*",
+        headers: [
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          {
+            key: "Content-Security-Policy",
+            value:
+              "frame-ancestors 'self' https://*.olcc.com.my https://*.vercel.app",
+          },
+        ],
+      },
+      {
+        source: "/eduflow/demo/:path*",
         headers: [
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           {

@@ -16,6 +16,13 @@ export default function ProductIndex() {
       url: "/carwashflow",
       live: true,
     },
+    {
+      slug: "eduflow",
+      name: "EduFlow",
+      tagline: "教育中心 / 艺术中心管理系统",
+      url: "/eduflow",
+      live: true,
+    },
     // Add future products here as they ship.
     // { slug: "beautyflow", name: "BeautyFlow", tagline: "美容中心管理", url: "/beautyflow", live: false },
   ];
