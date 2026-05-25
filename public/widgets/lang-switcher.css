@@ -5,7 +5,9 @@
  */
 .olcc-lang {
   position: fixed;
-  top: 16px;
+  /* Sits just below the nav (which is ~64–72px tall on landing pages).
+     If a page has no nav, this still looks fine as a "second row" widget. */
+  top: 76px;
   right: 16px;
   z-index: 9999;
   font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -104,10 +106,10 @@
   font-weight: 400;
 }
 
-/* Smaller positioning on mobile so it doesn't overlap nav CTA */
+/* On mobile the nav is shorter — pull the switcher up slightly. */
 @media (max-width: 640px) {
   .olcc-lang {
-    top: 10px;
+    top: 60px;
     right: 10px;
     font-size: 12px;
   }
