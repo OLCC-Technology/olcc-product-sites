@@ -7,6 +7,9 @@
 <meta name="description" content="RenoFlow 是为 1-3 人小型装修团队量身打造的工具。估价单、Supplier 比价、项目成本、工时、PO、进度款、保修期 — 老板自己一个人，也能把账算清。Johor Bahru 本地团队。">
 <meta name="keywords" content="装修公司管理系统, 装修估价系统, JB renovation software, RenoFlow, OLCC, 工程报价单, supplier 比价, 工时记录, 保修期管理">
 
+<!-- i18n (中/EN/MS one-click switcher; injects UI on load) -->
+<script src="/renoflow/i18n.js" defer></script>
+
 <!-- Open Graph -->
 <meta property="og:title" content="RenoFlow · 装修公司管理系统">
 <meta property="og:description" content="让装修老板从估价表和 WhatsApp 解脱出来。专为 1-3 人小型装修团队打造。">
@@ -1183,7 +1186,7 @@ body::before {
         <span class="eyebrow-dot"></span>
         专为 JB 装修公司打造  ·  Johor Bahru
       </div>
-      <h1>
+      <h1 data-i18n="hero-h1">
         让装修老板从估价表和 <em>WhatsApp</em><br>解脱出来
       </h1>
       <p class="hero-sub">
@@ -1291,7 +1294,7 @@ body::before {
 <section class="pain section">
   <div class="section-head reveal">
     <div class="section-eyebrow">您是不是也遇到这些？</div>
-    <h2 class="section-title">每天<em>耗在估价和追料</em>上</h2>
+    <h2 class="section-title" data-i18n="pain-h2">每天<em>耗在估价和追料</em>上</h2>
     <p class="section-lede">如果您正在经营一间小型装修公司，这些场景应该再熟悉不过。RenoFlow 就是来终结它们的。</p>
   </div>
 
@@ -1328,7 +1331,7 @@ body::before {
 <section class="demo section" id="demo">
   <div class="section-head reveal">
     <div class="section-eyebrow">Live Demo · 立即试用</div>
-    <h2 class="section-title">不用注册，<em>直接打开看</em></h2>
+    <h2 class="section-title" data-i18n="demo-h2">不用注册，<em>直接打开看</em></h2>
     <p class="section-lede">点击下方查看完整 demo。从估价单到保修期，8 个模块全部能点。这就是您未来每天会用的系统。</p>
   </div>
 
@@ -1360,7 +1363,7 @@ body::before {
 <section class="section" id="features">
   <div class="section-head reveal">
     <div class="section-eyebrow">八大核心模块</div>
-    <h2 class="section-title">您每天会用的，<em>全部内建</em></h2>
+    <h2 class="section-title" data-i18n="features-h2">您每天会用的，<em>全部内建</em></h2>
     <p class="section-lede">不是通用 SaaS 硬塞进来。每个模块都是为 JB 小型装修队的实际工作流程设计 — 从估价到保修期，老板一个人也搞得定。</p>
   </div>
 
@@ -1380,7 +1383,7 @@ body::before {
 <section class="pricing section" id="pricing">
   <div class="section-head reveal">
     <div class="section-eyebrow">透明定价</div>
-    <h2 class="section-title">选择<em>适合您规模</em>的方案</h2>
+    <h2 class="section-title" data-i18n="pricing-h2">选择<em>适合您规模</em>的方案</h2>
     <p class="section-lede">所有方案都包含 hosting、域名、SSL 证书、每日备份和 8 大核心模块。Setup 费用一次性，月费起算。</p>
   </div>
 
@@ -1459,7 +1462,7 @@ body::before {
 <section class="section" id="cases">
   <div class="section-head reveal">
     <div class="section-eyebrow">真实案例</div>
-    <h2 class="section-title">已经在用<em>RenoFlow 的装修公司</em></h2>
+    <h2 class="section-title" data-i18n="cases-h2">已经在用<em>RenoFlow 的装修公司</em></h2>
     <p class="section-lede">这些是 RenoFlow 的早期 pilot 客户。我们和他们一起把系统打磨成真正合用的工具。客户名字在客户允许后会更新。</p>
   </div>
 
@@ -1509,7 +1512,7 @@ body::before {
 <section class="faq section" id="faq">
   <div class="section-head reveal">
     <div class="section-eyebrow">常见问题</div>
-    <h2 class="section-title">您可能<em>想知道的</em></h2>
+    <h2 class="section-title" data-i18n="faq-h2">您可能<em>想知道的</em></h2>
   </div>
 
   <div class="faq-wrap reveal">
@@ -1552,7 +1555,7 @@ body::before {
 <section class="cta-section" id="contact">
   <div class="cta-inner reveal">
     <div class="cta-eyebrow">下一步</div>
-    <h2>让我们花 <em>30 分钟</em>，<br>聊聊您公司的状况</h2>
+    <h2 data-i18n="cta-h2">让我们花 <em>30 分钟</em>，<br>聊聊您公司的状况</h2>
     <p>免费咨询 · 不绑约 · 现场或线上 demo 任您选</p>
     <div class="cta-buttons">
       <a href="https://wa.me/60165789873?text=Hi，我想了解 RenoFlow" class="btn-primary">

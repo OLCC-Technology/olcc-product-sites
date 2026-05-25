@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RenoFlow · 装修公司管理系统 Demo</title>
+<script src="/renoflow/i18n.js" defer></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -521,7 +522,7 @@
 
   <!-- Top banner -->
   <div class="top-banner">
-    <div class="banner-left">✨ <strong>RenoFlow</strong> · 专为 1-3 人小型装修队打造的管理系统</div>
+    <div class="banner-left" data-i18n="banner-left">✨ <strong>RenoFlow</strong> · 专为 1-3 人小型装修队打造的管理系统</div>
     <a href="https://wa.me/60165789873?text=Hi，我想了解 RenoFlow" target="_blank" class="banner-cta">预约 Demo →</a>
   </div>
 
@@ -638,7 +639,7 @@
           </table>
         </div>
 
-        <div class="info-box">
+        <div class="info-box" data-i18n="info-dashboard">
           💡 <strong>为什么这个对您重要：</strong>装修业老板一天要处理 N 件事 — 估价、催款、追料、看工地。仪表盘把"今天必须做"的全部按优先级排好，老板早上一开就知道先做什么，不再因为漏掉某件事而失分。
         </div>
       </div>
@@ -734,7 +735,7 @@
           </div>
         </div>
 
-        <div class="info-box" style="margin-top: 20px;">
+        <div class="info-box" style="margin-top: 20px;" data-i18n="info-projects">
           💡 <strong>为什么这个对您重要：</strong>1-3 人小队最容易"几个项目一起跑就乱"。看板把每个项目的当前阶段一目了然摆出来。延误项目自动标红 → 您马上知道哪个要救火，哪个可以放后面。
         </div>
       </div>
@@ -833,7 +834,7 @@
           </div>
         </div>
 
-        <div class="info-box">
+        <div class="info-box" data-i18n="info-quote">
           💡 <strong>为什么这个对您重要：</strong>以前一张估价单 2-3 小时，常漏品项亏钱。现在从品项库拉选 + 改数量，30 分钟搞定。同一客户改方案？复制成新版本继续改，旧版自动留底。客户问"为什么这么贵？"，您可以直接给品项明细。
         </div>
       </div>
@@ -883,7 +884,7 @@
           <div class="supplier-cell price" style="font-weight: 700;">RM 5,220</div>
         </div>
 
-        <div class="info-box" style="margin-top: 20px;">
+        <div class="info-box" style="margin-top: 20px;" data-i18n="info-supplier">
           💡 <strong>为什么这个对您重要：</strong>以前比价靠 WhatsApp 截图，每次都要翻半天。现在群发同一品项给三家 supplier，回价并排显示 → 最低自动标 ⭐ → 一键选定生成 PO。<strong>这单光是选 Supplier B 就省 RM 820</strong>，一年下来差几万。
         </div>
       </div>
@@ -963,7 +964,7 @@
           <div class="po-body">PVC 电线 ×100m · Socket Schneider ×8 · MCB 32A ×4</div>
         </div>
 
-        <div class="info-box" style="margin-top: 20px;">
+        <div class="info-box" style="margin-top: 20px;" data-i18n="info-po">
           💡 <strong>为什么这个对您重要：</strong>所有采购走 PO → supplier 端有记录、您端有记录、客户结算时有依据。"哪些料已经到了？哪些还没付钱？" 一目了然。再也不会忘记给 supplier 付款（关系搞坏，下次报价就贵）。
         </div>
       </div>
@@ -1056,7 +1057,7 @@
           </table>
         </div>
 
-        <div class="info-box warn">
+        <div class="info-box warn" data-i18n="info-payment-warn">
           ⚠️ <strong>陈先生店面装修中期款逾期 12 天。</strong>系统已在 5/13、5/15、5/19 自动发过 WhatsApp 催款。建议今天亲自打电话跟进。
         </div>
       </div>
@@ -1153,11 +1154,11 @@
           </div>
         </div>
 
-        <div class="info-box warn">
+        <div class="info-box warn" data-i18n="info-cost-warn">
           ⚠️ <strong>油漆品类超支 5% (RM 150)。</strong>原因可能是估价时漏算第二道底漆。建议下次同类项目，油漆品项默认按 2 道底漆 + 2 道面漆估。
         </div>
 
-        <div class="info-box" style="margin-top: 12px;">
+        <div class="info-box" style="margin-top: 12px;" data-i18n="info-cost">
           💡 <strong>为什么这个对您重要：</strong>这是 1-3 人小队最容易忽略的事 — 每个项目做完到底赚多少。"估 vs 实"自动对比 → 哪个品类常超支 → 下次估价就调整。一年下来毛利从 20% 提到 30% 不是梦。
         </div>
       </div>
@@ -1263,7 +1264,7 @@
           </table>
         </div>
 
-        <div class="info-box">
+        <div class="info-box" data-i18n="info-hours">
           💡 <strong>为什么这个对您重要：</strong>外包工不用下 app — 手机浏览器打开链接、点几下记工时就行。月底您一键导出报表，按工时×时薪自动算钱。再也不会因为多算少算跟师傅吵架，关系好下次叫人才容易。
         </div>
       </div>
@@ -1378,7 +1379,7 @@
           </div>
         </div>
 
-        <div class="info-box" style="margin-top: 20px;">
+        <div class="info-box" style="margin-top: 20px;" data-i18n="info-warranty">
           💡 <strong>为什么这个对您重要：</strong>1-3 人小队最难做、但最能留客的事 — 主动回访。系统在保修到期前 30 天提醒您 → 您打个电话或上门看看 → 客户觉得您负责任 → 下次装修或推荐朋友的概率自然高。这一个功能能直接帮您拉到回头客。
         </div>
       </div>
