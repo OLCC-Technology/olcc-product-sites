@@ -35,6 +35,9 @@ const config: NextConfig = {
       // TripFlow
       { source: "/tripflow", destination: "/tripflow/index.html" },
       { source: "/tripflow/demo", destination: "/tripflow/demo/index.html" },
+      // RenoFlow
+      { source: "/renoflow", destination: "/renoflow/index.html" },
+      { source: "/renoflow/demo", destination: "/renoflow/demo/index.html" },
     ];
   },
 
@@ -66,6 +69,17 @@ const config: NextConfig = {
       },
       {
         source: "/tripflow/demo/:path*",
+        headers: [
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          {
+            key: "Content-Security-Policy",
+            value:
+              "frame-ancestors 'self' https://*.olcc.com.my https://*.vercel.app",
+          },
+        ],
+      },
+      {
+        source: "/renoflow/demo/:path*",
         headers: [
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           {

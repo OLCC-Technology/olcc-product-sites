@@ -30,6 +30,13 @@ export default function ProductIndex() {
       url: "/tripflow",
       live: true,
     },
+    {
+      slug: "renoflow",
+      name: "RenoFlow",
+      tagline: "装修公司管理系统",
+      url: "/renoflow",
+      live: true,
+    },
     // Add future products here as they ship.
     // { slug: "beautyflow", name: "BeautyFlow", tagline: "美容中心管理", url: "/beautyflow", live: false },
   ];

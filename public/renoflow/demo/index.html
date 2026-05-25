@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RenoFlow · 装修公司管理系统 Demo</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f3eee4;
+    color: #2d3a2e;
+    min-height: 100vh;
+  }
+  .app-shell {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: #faf7f2;
+    min-height: 100vh;
+    box-shadow: 0 0 40px rgba(0,0,0,0.05);
+  }
+  /* Top banner */
+  .top-banner {
+    background: linear-gradient(135deg, #2d3a2e 0%, #4a5a4d 100%);
+    color: #fff;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .banner-left { font-size: 13px; opacity: 0.9; }
+  .banner-cta {
+    background: #d4a85a;
+    color: #2d3a2e;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  /* Industry switcher (only one industry for RenoFlow but preserves pattern) */
+  .industry-bar {
+    background: #fff;
+    padding: 16px 28px;
+    border-bottom: 1px solid #e8e0d3;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .industry-label {
+    font-size: 13px;
+    color: #6b7568;
+    font-weight: 500;
+  }
+  .industry-btn {
+    background: #f0ebe0;
+    border: 1px solid transparent;
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #5a6b5c;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .industry-btn.active {
+    background: #5a7a5f;
+    color: #fff;
+    border-color: #5a7a5f;
+    box-shadow: 0 2px 8px rgba(90,122,95,0.25);
+  }
+  .industry-btn:hover:not(.active) {
+    background: #e5dcc8;
+  }
+  .demo-badge {
+    margin-left: auto;
+    font-size: 11px;
+    color: #a89878;
+    background: #fdf6e3;
+    padding: 5px 12px;
+    border-radius: 12px;
+    border: 1px solid #f0e4c8;
+  }
+  .app-body {
+    display: flex;
+    min-height: 720px;
+  }
+  /* Sidebar */
+  .sidebar {
+    width: 230px;
+    background: #fff;
+    border-right: 1px solid #e8e0d3;
+    padding: 20px 0;
+    flex-shrink: 0;
+  }
+  .brand {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid #f0ebe0;
+    margin-bottom: 16px;
+  }
+  .brand-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2d3a2e;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand-logo {
+    width: 34px;
+    height: 34px;
+    background: linear-gradient(135deg, #7a9c7e, #5a7a5f);
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .brand-sub {
+    font-size: 11px;
+    color: #8a948c;
+    margin-top: 4px;
+    margin-left: 44px;
+  }
+  .nav-item {
+    padding: 11px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: #5a6b5c;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+  }
+  .nav-item:hover { background: #f7f3ea; }
+  .nav-item.active {
+    background: #eef2ec;
+    color: #2d3a2e;
+    border-left-color: #5a7a5f;
+    font-weight: 600;
+  }
+  .nav-icon { width: 18px; text-align: center; font-size: 15px; }
+  .nav-section {
+    font-size: 10px;
+    color: #a89878;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 16px 20px 6px;
+    font-weight: 600;
+  }
+  /* Main content */
+  .main-content {
+    flex: 1;
+    padding: 26px 30px;
+    overflow-y: auto;
+    background: #faf7f2;
+  }
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .page-title { font-size: 24px; font-weight: 700; color: #2d3a2e; }
+  .page-sub { font-size: 13px; color: #6b7568; margin-top: 4px; }
+  .btn-primary {
+    background: #5a7a5f;
+    color: #fff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 7px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+  }
+  .btn-primary:hover { background: #4a6a4f; }
+  .btn-secondary {
+    background: #fff;
+    color: #5a6b5c;
+    border: 1px solid #d4cdb8;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+    margin-left: 6px;
+  }
+  /* Stat cards */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: #fff;
+    border: 1px solid #e8e0d3;
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: #8a948c;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .stat-value { font-size: 26px; font-weight: 700; color: #2d3a2e; }
+  .stat-trend { font-size: 11px; color: #7a9c7e; margin-top: 6px; }
+  .stat-trend.warn { color: #c08855; }
+  .stat-trend.danger { color: #a04848; }
+  /* Tables */
+  .data-card {
+    background: #fff;
+    border: 1px solid #e8e0d3;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .data-card-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid #f0ebe0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .data-card-title { font-size: 15px; font-weight: 600; color: #2d3a2e; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: #f7f3ea;
+    padding: 11px 14px;
+    text-align: left;
+    font-weight: 600;
+    color: #6b7568;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e8e0d3;
+  }
+  td {
+    padding: 13px 14px;
+    border-bottom: 1px solid #f0ebe0;
+    color: #2d3a2e;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fbf8f1; }
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .pill-green { background: #e5efde; color: #4a6a4f; }
+  .pill-orange { background: #fbe9d4; color: #b07540; }
+  .pill-red { background: #f5dada; color: #a04848; }
+  .pill-blue { background: #dde7f0; color: #4a6580; }
+  .pill-gray { background: #ebe6dc; color: #6b7568; }
+  /* Project board / timeline */
+  .project-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .project-col {
+    background: #fff;
+    border: 1px solid #e8e0d3;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .project-col-head {
+    padding: 11px 14px;
+    background: #f7f3ea;
+    border-bottom: 1px solid #e8e0d3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .project-col-head-title { font-size: 12px; font-weight: 700; color: #2d3a2e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .project-col-head-count {
+    background: #fff;
+    color: #6b7568;
+    border-radius: 10px;
+    padding: 1px 8px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .project-card {
+    margin: 10px;
+    padding: 12px;
+    background: #faf7f2;
+    border: 1px solid #f0ebe0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .project-card:hover { background: #fff; border-color: #d4cdb8; transform: translateY(-1px); }
+  .project-card-name { font-size: 13px; font-weight: 600; color: #2d3a2e; margin-bottom: 4px; }
+  .project-card-meta { font-size: 11px; color: #8a948c; margin-bottom: 8px; }
+  .project-card-foot { display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
+  .project-card-amount { color: #5a7a5f; font-weight: 600; }
+  /* Quote builder */
+  .quote-section {
+    background: #fff;
+    border: 1px solid #e8e0d3;
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 16px;
+  }
+  .quote-section h3 {
+    font-size: 14px;
+    color: #2d3a2e;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0ebe0;
+  }
+  .quote-totals {
+    background: #eef2ec;
+    border: 1px solid #d4e3d6;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .quote-totals-label { font-size: 13px; color: #2d3a2e; font-weight: 600; }
+  .quote-totals-value { font-size: 22px; color: #2d3a2e; font-weight: 700; }
+  /* Supplier comparison */
+  .supplier-grid {
+    display: grid;
+    grid-template-columns: 1.5fr repeat(3, 1fr);
+    gap: 0;
+    background: #fff;
+    border: 1px solid #e8e0d3;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .supplier-cell {
+    padding: 12px 14px;
+    border-right: 1px solid #f0ebe0;
+    border-bottom: 1px solid #f0ebe0;
+    font-size: 12px;
+  }
+  .supplier-cell:nth-child(4n) { border-right: none; }
+  .supplier-cell.header {
+    background: #f7f3ea;
+    font-weight: 700;
+    color: #6b7568;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+  .supplier-cell.header.item { text-align: left; }
+  .supplier-cell.item-name { font-weight: 600; color: #2d3a2e; background: #fbf8f1; }
+  .supplier-cell.price { text-align: center; font-weight: 500; color: #5a6b5c; }
+  .supplier-cell.price.lowest {
+    background: #eef2ec;
+    color: #4a6a4f;
+    font-weight: 700;
+    position: relative;
+  }
+  .supplier-cell.price.lowest::after {
+    content: '⭐';
+    position: absolute;
+    top: 3px;
+    right: 4px;
+    font-size: 9px;
+  }
+  /* Cost analysis */
+  .cost-bar-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 100px;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 14px;
+    font-size: 12px;
+  }
+  .cost-bar-label { color: #6b7568; font-weight: 500; }
+  .cost-bar-track {
+    background: #f0ebe0;
+    border-radius: 5px;
+    height: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cost-bar-actual {
+    background: linear-gradient(90deg, #7a9c7e, #5a7a5f);
+    height: 100%;
+    border-radius: 5px;
+  }
+  .cost-bar-over {
+    background: linear-gradient(90deg, #d68855, #c07040);
+    height: 100%;
+    border-radius: 5px;
+  }
+  .cost-bar-value { text-align: right; font-weight: 600; color: #2d3a2e; }
+  /* Warranty cards */
+  .warranty-card-row {
+    display: grid;
+    grid-template-columns: 1fr 130px 130px 100px;
+    gap: 14px;
+    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid #e8e0d3;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    align-items: center;
+    font-size: 13px;
+  }
+  .warranty-card-row.expiring {
+    background: #fdf6e3;
+    border-color: #f0e4c8;
+  }
+  .warranty-name { font-weight: 600; color: #2d3a2e; }
+  .warranty-meta { font-size: 11px; color: #8a948c; margin-top: 2px; }
+  /* PO card */
+  .po-card {
+    background: #fff;
+    border: 1px solid #e8e0d3;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+  .po-card-head {
+    padding: 14px 18px;
+    border-bottom: 1px solid #f0ebe0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .po-num { font-size: 12px; color: #8a948c; font-family: 'JetBrains Mono', monospace; }
+  .po-supplier { font-size: 14px; font-weight: 600; color: #2d3a2e; margin-top: 2px; }
+  .po-amount { font-size: 17px; font-weight: 700; color: #2d3a2e; }
+  .po-body {
+    padding: 12px 18px;
+    font-size: 12px;
+    color: #6b7568;
+  }
+  /* Avatar */
+  .avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #d4e3d6;
+    color: #4a6a4f;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  /* Notice boxes */
+  .info-box {
+    background: #eef2ec;
+    border: 1px solid #d4e3d6;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: #2d3a2e;
+    line-height: 1.6;
+  }
+  .info-box.warn {
+    background: #fdf6e3;
+    border-color: #f0e4c8;
+    color: #6b5530;
+  }
+  .page-section { display: none; animation: fadeIn 0.25s ease; }
+  .page-section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  /* Footer */
+  .footer {
+    background: #2d3a2e;
+    color: #faf7f2;
+    padding: 30px 28px;
+    text-align: center;
+  }
+  .footer h3 { font-size: 18px; margin-bottom: 8px; }
+  .footer p { font-size: 13px; opacity: 0.8; margin-bottom: 14px; }
+  .footer .btn-primary {
+    background: #d4a85a;
+    color: #2d3a2e;
+    padding: 10px 24px;
+    font-weight: 600;
+  }
+  .footer .btn-primary:hover { background: #c0944a; }
+  @media (max-width: 900px) {
+    .sidebar { width: 64px; }
+    .nav-item span:not(.nav-icon) { display: none; }
+    .brand-name > span:not(.brand-logo) { display: none; }
+    .brand-sub { display: none; }
+    .nav-section { font-size: 0; padding: 6px 0; height: 4px; }
+    .nav-icon { font-size: 16px; }
+  }
+  @media (max-width: 600px) {
+    .main-content { padding: 18px 16px; }
+    .page-title { font-size: 20px; }
+    .supplier-grid { grid-template-columns: 1fr; }
+    .warranty-card-row { grid-template-columns: 1fr; }
+    .cost-bar-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- Top banner -->
+  <div class="top-banner">
+    <div class="banner-left">✨ <strong>RenoFlow</strong> · 专为 1-3 人小型装修队打造的管理系统</div>
+    <a href="https://wa.me/60165789873?text=Hi，我想了解 RenoFlow" target="_blank" class="banner-cta">预约 Demo →</a>
+  </div>
+
+  <!-- Industry switcher (single industry for RenoFlow) -->
+  <div class="industry-bar">
+    <span class="industry-label">行业演示：</span>
+    <button class="industry-btn active" data-industry="reno">🏠 装修公司 (老板视角)</button>
+    <span class="demo-badge">Demo · 数据为演示用</span>
+  </div>
+
+  <div class="app-body">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-name">
+          <span class="brand-logo">陈</span>
+          <span>陈氏装修</span>
+        </div>
+        <div class="brand-sub">老板后台</div>
+      </div>
+      <div class="nav-section">日常</div>
+      <div class="nav-item active" data-page="dashboard"><span class="nav-icon">📊</span><span>仪表盘</span></div>
+      <div class="nav-item" data-page="projects"><span class="nav-icon">📋</span><span>项目进度追踪</span></div>
+      <div class="nav-item" data-page="quote"><span class="nav-icon">📝</span><span>估价单生成</span></div>
+      <div class="nav-section">采购</div>
+      <div class="nav-item" data-page="supplier"><span class="nav-icon">⚖️</span><span>Supplier 比价</span></div>
+      <div class="nav-item" data-page="po"><span class="nav-icon">📦</span><span>采购订单 PO</span></div>
+      <div class="nav-section">财务</div>
+      <div class="nav-item" data-page="payment"><span class="nav-icon">💰</span><span>进度款收款</span></div>
+      <div class="nav-item" data-page="cost"><span class="nav-icon">📊</span><span>项目成本核算</span></div>
+      <div class="nav-section">运营</div>
+      <div class="nav-item" data-page="hours"><span class="nav-icon">⏱️</span><span>工时记录</span></div>
+      <div class="nav-item" data-page="warranty"><span class="nav-icon">🛡️</span><span>保修期管理</span></div>
+    </aside>
+
+    <main class="main-content">
+
+      <!-- ========== DASHBOARD ========== -->
+      <div class="page-section active" id="page-dashboard">
+        <div class="page-header">
+          <div>
+            <div class="page-title">早安，陈老板 👋</div>
+            <div class="page-sub">这是今天的陈氏装修概况 · 2026/05/24</div>
+          </div>
+          <div>
+            <button class="btn-secondary">本月报表</button>
+            <button class="btn-primary">+ 新建项目</button>
+          </div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-label">进行中项目</div>
+            <div class="stat-value">6</div>
+            <div class="stat-trend">2 个本周交付</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">应收进度款</div>
+            <div class="stat-value">RM 24K</div>
+            <div class="stat-trend warn">⚠ 3 笔到期</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">本月毛利</div>
+            <div class="stat-value">RM 18K</div>
+            <div class="stat-trend">↑ 12% vs 估价</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">保修中项目</div>
+            <div class="stat-value">12</div>
+            <div class="stat-trend warn">1 个本月到期</div>
+          </div>
+        </div>
+
+        <div class="data-card">
+          <div class="data-card-header">
+            <div class="data-card-title">今日待办</div>
+            <button class="btn-secondary">查看全部 →</button>
+          </div>
+          <table>
+            <thead>
+              <tr><th>项目</th><th>类型</th><th>说明</th><th>状态</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>林先生客厅翻新</strong></td>
+                <td>估价单</td>
+                <td>今日截止，待发给客户确认</td>
+                <td><span class="pill pill-red">紧急</span></td>
+              </tr>
+              <tr>
+                <td><strong>瓷砖采购</strong></td>
+                <td>Supplier 比价</td>
+                <td>3 家 supplier 回价已齐，最低 RM 32/m²</td>
+                <td><span class="pill pill-green">就绪</span></td>
+              </tr>
+              <tr>
+                <td><strong>泰丰花园翻新</strong></td>
+                <td>进度款</td>
+                <td>中期款 RM 8,500 到期 3 天</td>
+                <td><span class="pill pill-orange">待收</span></td>
+              </tr>
+              <tr>
+                <td><strong>黄太太厨房</strong></td>
+                <td>保修期</td>
+                <td>水电保修期 25 天后到期，建议回访</td>
+                <td><span class="pill pill-blue">提醒</span></td>
+              </tr>
+              <tr>
+                <td><strong>外包工时审核</strong></td>
+                <td>工时</td>
+                <td>李师傅 + 黄师傅 本周工时待确认</td>
+                <td><span class="pill pill-gray">待审</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box">
+          💡 <strong>为什么这个对您重要：</strong>装修业老板一天要处理 N 件事 — 估价、催款、追料、看工地。仪表盘把"今天必须做"的全部按优先级排好，老板早上一开就知道先做什么，不再因为漏掉某件事而失分。
+        </div>
+      </div>
+
+      <!-- ========== PROJECT TRACKING ========== -->
+      <div class="page-section" id="page-projects">
+        <div class="page-header">
+          <div>
+            <div class="page-title">项目进度追踪</div>
+            <div class="page-sub">所有进行中项目，按阶段排列。延误自动标红</div>
+          </div>
+          <div>
+            <button class="btn-secondary">筛选</button>
+            <button class="btn-primary">+ 新建项目</button>
+          </div>
+        </div>
+
+        <div class="project-board">
+          <div class="project-col">
+            <div class="project-col-head">
+              <div class="project-col-head-title">📝 估价中</div>
+              <div class="project-col-head-count">2</div>
+            </div>
+            <div class="project-card">
+              <div class="project-card-name">林先生客厅翻新</div>
+              <div class="project-card-meta">Taman Pelangi · 800 sqft</div>
+              <div class="project-card-foot">
+                <span class="pill pill-red">今日截止</span>
+                <span class="project-card-amount">RM ~18K</span>
+              </div>
+            </div>
+            <div class="project-card">
+              <div class="project-card-name">Ms. Tan 卧室改造</div>
+              <div class="project-card-meta">Mount Austin · 350 sqft</div>
+              <div class="project-card-foot">
+                <span class="pill pill-gray">3 天内</span>
+                <span class="project-card-amount">RM ~9K</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-col">
+            <div class="project-col-head">
+              <div class="project-col-head-title">📋 采购中</div>
+              <div class="project-col-head-count">1</div>
+            </div>
+            <div class="project-card">
+              <div class="project-card-name">黄太太厨房翻新</div>
+              <div class="project-card-meta">Setia Indah · 已签约</div>
+              <div class="project-card-foot">
+                <span class="pill pill-blue">瓷砖待到</span>
+                <span class="project-card-amount">RM 24K</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-col">
+            <div class="project-col-head">
+              <div class="project-col-head-title">🔨 施工中</div>
+              <div class="project-col-head-count">2</div>
+            </div>
+            <div class="project-card">
+              <div class="project-card-name">泰丰花园全屋翻新</div>
+              <div class="project-card-meta">Taman Daya · 进度 60%</div>
+              <div class="project-card-foot">
+                <span class="pill pill-green">如期</span>
+                <span class="project-card-amount">RM 42K</span>
+              </div>
+            </div>
+            <div class="project-card">
+              <div class="project-card-name">陈先生店面装修</div>
+              <div class="project-card-meta">Mid Valley Southkey · 进度 40%</div>
+              <div class="project-card-foot">
+                <span class="pill pill-orange">延误 2 天</span>
+                <span class="project-card-amount">RM 35K</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-col">
+            <div class="project-col-head">
+              <div class="project-col-head-title">✅ 验收中</div>
+              <div class="project-col-head-count">1</div>
+            </div>
+            <div class="project-card">
+              <div class="project-card-name">林女士书房改造</div>
+              <div class="project-card-meta">Mount Austin · 完工待验</div>
+              <div class="project-card-foot">
+                <span class="pill pill-green">本周</span>
+                <span class="project-card-amount">RM 12K</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box" style="margin-top: 20px;">
+          💡 <strong>为什么这个对您重要：</strong>1-3 人小队最容易"几个项目一起跑就乱"。看板把每个项目的当前阶段一目了然摆出来。延误项目自动标红 → 您马上知道哪个要救火，哪个可以放后面。
+        </div>
+      </div>
+
+      <!-- ========== QUOTE BUILDER ========== -->
+      <div class="page-section" id="page-quote">
+        <div class="page-header">
+          <div>
+            <div class="page-title">估价单生成 · 林先生客厅翻新</div>
+            <div class="page-sub">从品项库拉选 + 改数量 + 一键导出 PDF</div>
+          </div>
+          <div>
+            <button class="btn-secondary">预览 PDF</button>
+            <button class="btn-primary">+ 加品项</button>
+          </div>
+        </div>
+
+        <div class="quote-section">
+          <h3>客户资料</h3>
+          <table>
+            <tr>
+              <td style="width: 30%; color: #8a948c;">客户姓名</td>
+              <td><strong>林先生</strong></td>
+              <td style="width: 30%; color: #8a948c;">联络</td>
+              <td>012-345 6789</td>
+            </tr>
+            <tr>
+              <td style="color: #8a948c;">项目地址</td>
+              <td>15, Jalan Pelangi, Taman Pelangi, JB</td>
+              <td style="color: #8a948c;">面积</td>
+              <td>客厅 800 sqft</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="quote-section">
+          <h3>项目品项（从您的装修品项库拉选）</h3>
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 35%;">品项</th>
+                <th style="width: 15%;">单位</th>
+                <th style="width: 15%;">数量</th>
+                <th style="width: 17%;">单价 (RM)</th>
+                <th style="width: 18%; text-align: right;">小计 (RM)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>水电改造</strong><br><span style="font-size: 11px; color: #8a948c;">新加 4 个 socket + 灯位重新走线</span></td>
+                <td>套</td>
+                <td>1</td>
+                <td>2,500.00</td>
+                <td style="text-align: right; font-weight: 600;">2,500.00</td>
+              </tr>
+              <tr>
+                <td><strong>墙身油漆</strong><br><span style="font-size: 11px; color: #8a948c;">Nippon 立邦 全亚光 5 升</span></td>
+                <td>sqft</td>
+                <td>1,200</td>
+                <td>2.50</td>
+                <td style="text-align: right; font-weight: 600;">3,000.00</td>
+              </tr>
+              <tr>
+                <td><strong>瓷砖铺设（包工包料）</strong><br><span style="font-size: 11px; color: #8a948c;">600×600 抛光砖 含勾缝</span></td>
+                <td>sqft</td>
+                <td>800</td>
+                <td>8.50</td>
+                <td style="text-align: right; font-weight: 600;">6,800.00</td>
+              </tr>
+              <tr>
+                <td><strong>石膏天花板</strong><br><span style="font-size: 11px; color: #8a948c;">含间接灯槽设计</span></td>
+                <td>sqft</td>
+                <td>600</td>
+                <td>4.80</td>
+                <td style="text-align: right; font-weight: 600;">2,880.00</td>
+              </tr>
+              <tr>
+                <td><strong>木工 - 电视墙 + 收纳柜</strong><br><span style="font-size: 11px; color: #8a948c;">实木皮包面 + 暗藏灯条</span></td>
+                <td>套</td>
+                <td>1</td>
+                <td>3,200.00</td>
+                <td style="text-align: right; font-weight: 600;">3,200.00</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="quote-totals">
+            <div>
+              <div style="font-size: 11px; color: #8a948c; text-transform: uppercase; letter-spacing: 0.5px;">小计 + 6% SST</div>
+              <div class="quote-totals-label">已自动加 6% SST</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 11px; color: #8a948c;">RM 18,380 + 1,102.80 SST</div>
+              <div class="quote-totals-value">RM 19,482.80</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          💡 <strong>为什么这个对您重要：</strong>以前一张估价单 2-3 小时，常漏品项亏钱。现在从品项库拉选 + 改数量，30 分钟搞定。同一客户改方案？复制成新版本继续改，旧版自动留底。客户问"为什么这么贵？"，您可以直接给品项明细。
+        </div>
+      </div>
+
+      <!-- ========== SUPPLIER COMPARISON ========== -->
+      <div class="page-section" id="page-supplier">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Supplier 报价对比 · 黄太太厨房瓷砖</div>
+            <div class="page-sub">三家 supplier 回价并排显示，最低自动标 ⭐</div>
+          </div>
+          <div>
+            <button class="btn-secondary">+ 加一家 supplier</button>
+            <button class="btn-primary">采用 Supplier B → 生成 PO</button>
+          </div>
+        </div>
+
+        <div class="supplier-grid">
+          <div class="supplier-cell header item">品项</div>
+          <div class="supplier-cell header">Lim 建材<br><span style="font-weight: 400; font-size: 10px;">012-3456789</span></div>
+          <div class="supplier-cell header">JB Hardware<br><span style="font-weight: 400; font-size: 10px;">013-9876543</span></div>
+          <div class="supplier-cell header">通用瓷砖<br><span style="font-weight: 400; font-size: 10px;">016-5551234</span></div>
+
+          <div class="supplier-cell item-name">600×600 抛光砖（每 m²）</div>
+          <div class="supplier-cell price">RM 38.00</div>
+          <div class="supplier-cell price lowest">RM 32.00</div>
+          <div class="supplier-cell price">RM 35.00</div>
+
+          <div class="supplier-cell item-name">瓷砖胶 25kg</div>
+          <div class="supplier-cell price lowest">RM 28.00</div>
+          <div class="supplier-cell price">RM 32.00</div>
+          <div class="supplier-cell price">RM 30.00</div>
+
+          <div class="supplier-cell item-name">勾缝剂 5kg</div>
+          <div class="supplier-cell price">RM 22.00</div>
+          <div class="supplier-cell price lowest">RM 18.50</div>
+          <div class="supplier-cell price">RM 20.00</div>
+
+          <div class="supplier-cell item-name">送货费</div>
+          <div class="supplier-cell price">RM 80</div>
+          <div class="supplier-cell price">免费 (>RM 500)</div>
+          <div class="supplier-cell price">RM 60</div>
+
+          <div class="supplier-cell item-name" style="background: #eef2ec; color: #2d3a2e; font-weight: 700;">总计（含送货）</div>
+          <div class="supplier-cell price" style="font-weight: 700;">RM 5,650</div>
+          <div class="supplier-cell price lowest" style="font-size: 14px;">RM 4,830</div>
+          <div class="supplier-cell price" style="font-weight: 700;">RM 5,220</div>
+        </div>
+
+        <div class="info-box" style="margin-top: 20px;">
+          💡 <strong>为什么这个对您重要：</strong>以前比价靠 WhatsApp 截图，每次都要翻半天。现在群发同一品项给三家 supplier，回价并排显示 → 最低自动标 ⭐ → 一键选定生成 PO。<strong>这单光是选 Supplier B 就省 RM 820</strong>，一年下来差几万。
+        </div>
+      </div>
+
+      <!-- ========== PO ========== -->
+      <div class="page-section" id="page-po">
+        <div class="page-header">
+          <div>
+            <div class="page-title">采购订单 PO</div>
+            <div class="page-sub">本月所有 PO，按状态追踪</div>
+          </div>
+          <div>
+            <button class="btn-secondary">已完成</button>
+            <button class="btn-primary">+ 新建 PO</button>
+          </div>
+        </div>
+
+        <div class="stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+          <div class="stat-card">
+            <div class="stat-label">本月 PO 数</div>
+            <div class="stat-value">14</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">待到货</div>
+            <div class="stat-value">3</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">已到未付</div>
+            <div class="stat-value">5</div>
+            <div class="stat-trend warn">RM 12,800</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">本月总采购</div>
+            <div class="stat-value">RM 32K</div>
+          </div>
+        </div>
+
+        <div class="po-card">
+          <div class="po-card-head">
+            <div>
+              <div class="po-num">PO-2026-0034</div>
+              <div class="po-supplier">JB Hardware · 黄太太厨房</div>
+            </div>
+            <div style="text-align: right;">
+              <div class="po-amount">RM 4,830</div>
+              <span class="pill pill-orange">运送中 · 预计 5/26 到</span>
+            </div>
+          </div>
+          <div class="po-body">600×600 抛光砖 ×24m² · 瓷砖胶 ×4 · 勾缝剂 ×2 · 送货免费</div>
+        </div>
+
+        <div class="po-card">
+          <div class="po-card-head">
+            <div>
+              <div class="po-num">PO-2026-0033</div>
+              <div class="po-supplier">Lim 建材 · 泰丰花园</div>
+            </div>
+            <div style="text-align: right;">
+              <div class="po-amount">RM 3,200</div>
+              <span class="pill pill-red">已到未付 · 3 天</span>
+            </div>
+          </div>
+          <div class="po-body">立邦油漆 5L ×8 罐 · 油漆配件套 ×3</div>
+        </div>
+
+        <div class="po-card">
+          <div class="po-card-head">
+            <div>
+              <div class="po-num">PO-2026-0032</div>
+              <div class="po-supplier">通用电料 · 林先生客厅</div>
+            </div>
+            <div style="text-align: right;">
+              <div class="po-amount">RM 1,420</div>
+              <span class="pill pill-green">已到 已付</span>
+            </div>
+          </div>
+          <div class="po-body">PVC 电线 ×100m · Socket Schneider ×8 · MCB 32A ×4</div>
+        </div>
+
+        <div class="info-box" style="margin-top: 20px;">
+          💡 <strong>为什么这个对您重要：</strong>所有采购走 PO → supplier 端有记录、您端有记录、客户结算时有依据。"哪些料已经到了？哪些还没付钱？" 一目了然。再也不会忘记给 supplier 付款（关系搞坏，下次报价就贵）。
+        </div>
+      </div>
+
+      <!-- ========== PAYMENT ========== -->
+      <div class="page-section" id="page-payment">
+        <div class="page-header">
+          <div>
+            <div class="page-title">进度款收款</div>
+            <div class="page-sub">每个项目订金/中期/尾款分期追踪 · 到期自动 WhatsApp 提醒客户</div>
+          </div>
+          <div>
+            <button class="btn-secondary">本月报表</button>
+            <button class="btn-primary">手动发提醒</button>
+          </div>
+        </div>
+
+        <div class="stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+          <div class="stat-card">
+            <div class="stat-label">本月已收</div>
+            <div class="stat-value">RM 38K</div>
+            <div class="stat-trend">↑ vs 上月</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">应收待收</div>
+            <div class="stat-value">RM 24K</div>
+            <div class="stat-trend warn">3 笔到期</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">逾期未收</div>
+            <div class="stat-value">RM 5.2K</div>
+            <div class="stat-trend danger">1 笔逾期 12 天</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">合约总额</div>
+            <div class="stat-value">RM 122K</div>
+            <div class="stat-trend">6 个进行中项目</div>
+          </div>
+        </div>
+
+        <div class="data-card">
+          <div class="data-card-header">
+            <div class="data-card-title">应收款（按到期日排序）</div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>项目 / 客户</th>
+                <th>期别</th>
+                <th>金额</th>
+                <th>应收日</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>陈先生店面装修</strong><br><span style="font-size: 11px; color: #8a948c;">合约 RM 35K</span></td>
+                <td>中期款 (40%)</td>
+                <td><strong>RM 14,000</strong></td>
+                <td>2026/05/12</td>
+                <td><span class="pill pill-red">逾期 12 天</span></td>
+                <td><button class="btn-primary" style="padding: 5px 12px; font-size: 12px;">发催款</button></td>
+              </tr>
+              <tr>
+                <td><strong>泰丰花园翻新</strong><br><span style="font-size: 11px; color: #8a948c;">合约 RM 42K</span></td>
+                <td>中期款 (50%)</td>
+                <td><strong>RM 8,500</strong></td>
+                <td>2026/05/27</td>
+                <td><span class="pill pill-orange">3 天到期</span></td>
+                <td><button class="btn-secondary" style="padding: 5px 12px; font-size: 12px;">自动已排</button></td>
+              </tr>
+              <tr>
+                <td><strong>黄太太厨房</strong><br><span style="font-size: 11px; color: #8a948c;">合约 RM 24K</span></td>
+                <td>订金 (30%)</td>
+                <td><strong>RM 7,200</strong></td>
+                <td>2026/05/28</td>
+                <td><span class="pill pill-blue">待收</span></td>
+                <td><button class="btn-secondary" style="padding: 5px 12px; font-size: 12px;">自动已排</button></td>
+              </tr>
+              <tr>
+                <td><strong>林女士书房</strong><br><span style="font-size: 11px; color: #8a948c;">合约 RM 12K</span></td>
+                <td>尾款 (20%)</td>
+                <td><strong>RM 2,400</strong></td>
+                <td>2026/05/30</td>
+                <td><span class="pill pill-blue">验收后</span></td>
+                <td><button class="btn-secondary" style="padding: 5px 12px; font-size: 12px;">自动已排</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box warn">
+          ⚠️ <strong>陈先生店面装修中期款逾期 12 天。</strong>系统已在 5/13、5/15、5/19 自动发过 WhatsApp 催款。建议今天亲自打电话跟进。
+        </div>
+      </div>
+
+      <!-- ========== COST ANALYSIS ========== -->
+      <div class="page-section" id="page-cost">
+        <div class="page-header">
+          <div>
+            <div class="page-title">项目成本核算 · 泰丰花园翻新</div>
+            <div class="page-sub">估价 vs 实际成本，每个品类分别对比</div>
+          </div>
+          <div>
+            <button class="btn-secondary">导出 Excel</button>
+            <button class="btn-primary">+ 加成本项</button>
+          </div>
+        </div>
+
+        <div class="stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+          <div class="stat-card">
+            <div class="stat-label">合约金额</div>
+            <div class="stat-value">RM 42,000</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">估算总成本</div>
+            <div class="stat-value">RM 28,500</div>
+            <div class="stat-trend">毛利 32%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">实际成本（至今）</div>
+            <div class="stat-value">RM 18,600</div>
+            <div class="stat-trend">已完成 65%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">预计最终毛利</div>
+            <div class="stat-value" style="color: #5a7a5f;">RM 13,200</div>
+            <div class="stat-trend">31.4% ↑</div>
+          </div>
+        </div>
+
+        <div class="data-card">
+          <div class="data-card-header">
+            <div class="data-card-title">分品类成本对比（估 vs 实）</div>
+          </div>
+          <div style="padding: 20px;">
+
+            <div class="cost-bar-row">
+              <div class="cost-bar-label">水电料</div>
+              <div class="cost-bar-track">
+                <div class="cost-bar-actual" style="width: 92%;"></div>
+              </div>
+              <div class="cost-bar-value">RM 4,140 / 4,500</div>
+            </div>
+
+            <div class="cost-bar-row">
+              <div class="cost-bar-label">瓷砖 + 工</div>
+              <div class="cost-bar-track">
+                <div class="cost-bar-actual" style="width: 78%;"></div>
+              </div>
+              <div class="cost-bar-value">RM 5,460 / 7,000</div>
+            </div>
+
+            <div class="cost-bar-row">
+              <div class="cost-bar-label">油漆 + 工</div>
+              <div class="cost-bar-track">
+                <div class="cost-bar-over" style="width: 105%;"></div>
+              </div>
+              <div class="cost-bar-value" style="color: #c07040;">RM 3,150 / 3,000 ⚠</div>
+            </div>
+
+            <div class="cost-bar-row">
+              <div class="cost-bar-label">木工</div>
+              <div class="cost-bar-track">
+                <div class="cost-bar-actual" style="width: 50%;"></div>
+              </div>
+              <div class="cost-bar-value">RM 4,000 / 8,000 <span style="font-size: 10px; color: #8a948c;">(未完)</span></div>
+            </div>
+
+            <div class="cost-bar-row">
+              <div class="cost-bar-label">外包工时</div>
+              <div class="cost-bar-track">
+                <div class="cost-bar-actual" style="width: 60%;"></div>
+              </div>
+              <div class="cost-bar-value">RM 1,850 / 3,000 <span style="font-size: 10px; color: #8a948c;">(未完)</span></div>
+            </div>
+
+            <div class="cost-bar-row">
+              <div class="cost-bar-label">其他杂支</div>
+              <div class="cost-bar-track">
+                <div class="cost-bar-actual" style="width: 88%;"></div>
+              </div>
+              <div class="cost-bar-value">RM 0 / 3,000 <span style="font-size: 10px; color: #8a948c;">(未发生)</span></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="info-box warn">
+          ⚠️ <strong>油漆品类超支 5% (RM 150)。</strong>原因可能是估价时漏算第二道底漆。建议下次同类项目，油漆品项默认按 2 道底漆 + 2 道面漆估。
+        </div>
+
+        <div class="info-box" style="margin-top: 12px;">
+          💡 <strong>为什么这个对您重要：</strong>这是 1-3 人小队最容易忽略的事 — 每个项目做完到底赚多少。"估 vs 实"自动对比 → 哪个品类常超支 → 下次估价就调整。一年下来毛利从 20% 提到 30% 不是梦。
+        </div>
+      </div>
+
+      <!-- ========== HOURS ========== -->
+      <div class="page-section" id="page-hours">
+        <div class="page-header">
+          <div>
+            <div class="page-title">工人/外包工时记录</div>
+            <div class="page-sub">工人手机记工时 · 月底自动算钱</div>
+          </div>
+          <div>
+            <button class="btn-secondary">发送本月报表</button>
+            <button class="btn-primary">+ 加工人</button>
+          </div>
+        </div>
+
+        <div class="stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+          <div class="stat-card">
+            <div class="stat-label">本月总工时</div>
+            <div class="stat-value">412 h</div>
+            <div class="stat-trend">5 位外包工</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">本月应付工钱</div>
+            <div class="stat-value">RM 14,420</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">待审核工时</div>
+            <div class="stat-value">42 h</div>
+            <div class="stat-trend warn">2 人待确认</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">本周高峰日</div>
+            <div class="stat-value">周三</div>
+            <div class="stat-trend">38 h</div>
+          </div>
+        </div>
+
+        <div class="data-card">
+          <div class="data-card-header">
+            <div class="data-card-title">本月工时明细（按工人）</div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>工人</th>
+                <th>工种</th>
+                <th>本月工时</th>
+                <th>时薪 (RM)</th>
+                <th>项目分配</th>
+                <th>应付 (RM)</th>
+                <th>状态</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="avatar">李</span><strong>李师傅</strong></td>
+                <td>水电</td>
+                <td>96 h</td>
+                <td>40</td>
+                <td>泰丰花园 · 林先生</td>
+                <td><strong>3,840</strong></td>
+                <td><span class="pill pill-green">已确认</span></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">黄</span><strong>黄师傅</strong></td>
+                <td>瓷砖</td>
+                <td>104 h</td>
+                <td>38</td>
+                <td>泰丰花园 · 黄太太</td>
+                <td><strong>3,952</strong></td>
+                <td><span class="pill pill-orange">22h 待审</span></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">王</span><strong>王师傅</strong></td>
+                <td>油漆</td>
+                <td>72 h</td>
+                <td>35</td>
+                <td>陈先生店面</td>
+                <td><strong>2,520</strong></td>
+                <td><span class="pill pill-green">已确认</span></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">陈</span><strong>陈师傅</strong></td>
+                <td>木工</td>
+                <td>88 h</td>
+                <td>42</td>
+                <td>林女士书房 · 林先生</td>
+                <td><strong>3,696</strong></td>
+                <td><span class="pill pill-green">已确认</span></td>
+              </tr>
+              <tr>
+                <td><span class="avatar">林</span><strong>林师傅</strong></td>
+                <td>泥水</td>
+                <td>52 h</td>
+                <td>40</td>
+                <td>泰丰花园</td>
+                <td><strong>2,080</strong></td>
+                <td><span class="pill pill-orange">20h 待审</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box">
+          💡 <strong>为什么这个对您重要：</strong>外包工不用下 app — 手机浏览器打开链接、点几下记工时就行。月底您一键导出报表，按工时×时薪自动算钱。再也不会因为多算少算跟师傅吵架，关系好下次叫人才容易。
+        </div>
+      </div>
+
+      <!-- ========== WARRANTY ========== -->
+      <div class="page-section" id="page-warranty">
+        <div class="page-header">
+          <div>
+            <div class="page-title">保修期管理</div>
+            <div class="page-sub">每个项目按品类设保修期 · 到期前 30 天自动提醒您主动回访</div>
+          </div>
+          <div>
+            <button class="btn-secondary">历史保修记录</button>
+            <button class="btn-primary">+ 加项目保修</button>
+          </div>
+        </div>
+
+        <div class="stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+          <div class="stat-card">
+            <div class="stat-label">保修中项目</div>
+            <div class="stat-value">12</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">本月到期</div>
+            <div class="stat-value">1</div>
+            <div class="stat-trend warn">建议回访</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">下月到期</div>
+            <div class="stat-value">3</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">本月主动回访</div>
+            <div class="stat-value">2</div>
+            <div class="stat-trend">1 个推荐了朋友</div>
+          </div>
+        </div>
+
+        <h3 style="font-size: 14px; color: #2d3a2e; margin-bottom: 12px; margin-top: 8px;">⚠️ 即将到期（30 天内）</h3>
+
+        <div class="warranty-card-row expiring">
+          <div>
+            <div class="warranty-name">黄太太厨房 · 水电保修</div>
+            <div class="warranty-meta">Setia Indah · 完工 2025/06/18 · 1 年保修</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 11px; color: #8a948c;">到期</div>
+            <div style="font-size: 13px; font-weight: 600; color: #b07540;">2026/06/18</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 11px; color: #8a948c;">剩余</div>
+            <div style="font-size: 13px; font-weight: 600; color: #b07540;">25 天</div>
+          </div>
+          <div style="text-align: right;">
+            <button class="btn-primary" style="padding: 6px 14px; font-size: 12px;">主动回访</button>
+          </div>
+        </div>
+
+        <h3 style="font-size: 14px; color: #2d3a2e; margin: 24px 0 12px;">保修中项目</h3>
+
+        <div class="warranty-card-row">
+          <div>
+            <div class="warranty-name">陈先生书房 · 木工保修</div>
+            <div class="warranty-meta">Taman Daya · 完工 2026/01/12 · 6 月保修</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 11px; color: #8a948c;">到期</div>
+            <div style="font-size: 13px; font-weight: 600;">2026/07/12</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 11px; color: #8a948c;">剩余</div>
+            <div style="font-size: 13px; font-weight: 600;">49 天</div>
+          </div>
+          <div style="text-align: right;">
+            <button class="btn-secondary" style="padding: 6px 14px; font-size: 12px;">查看</button>
+          </div>
+        </div>
+
+        <div class="warranty-card-row">
+          <div>
+            <div class="warranty-name">Ms. Tan 全屋翻新 · 全品类保修</div>
+            <div class="warranty-meta">Mount Austin · 完工 2026/03/05 · 1 年保修</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 11px; color: #8a948c;">到期</div>
+            <div style="font-size: 13px; font-weight: 600;">2027/03/05</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 11px; color: #8a948c;">剩余</div>
+            <div style="font-size: 13px; font-weight: 600;">285 天</div>
+          </div>
+          <div style="text-align: right;">
+            <button class="btn-secondary" style="padding: 6px 14px; font-size: 12px;">查看</button>
+          </div>
+        </div>
+
+        <div class="warranty-card-row">
+          <div>
+            <div class="warranty-name">林老板店面 · 水电+油漆保修</div>
+            <div class="warranty-meta">Mid Valley Southkey · 完工 2026/04/22 · 6 月保修</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 11px; color: #8a948c;">到期</div>
+            <div style="font-size: 13px; font-weight: 600;">2026/10/22</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 11px; color: #8a948c;">剩余</div>
+            <div style="font-size: 13px; font-weight: 600;">151 天</div>
+          </div>
+          <div style="text-align: right;">
+            <button class="btn-secondary" style="padding: 6px 14px; font-size: 12px;">查看</button>
+          </div>
+        </div>
+
+        <div class="info-box" style="margin-top: 20px;">
+          💡 <strong>为什么这个对您重要：</strong>1-3 人小队最难做、但最能留客的事 — 主动回访。系统在保修到期前 30 天提醒您 → 您打个电话或上门看看 → 客户觉得您负责任 → 下次装修或推荐朋友的概率自然高。这一个功能能直接帮您拉到回头客。
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Footer CTA -->
+  <div class="footer">
+    <h3>想知道您的装修队可以怎样使用 RenoFlow？</h3>
+    <p>我们提供一对一咨询 · 现场 demo · 免费试用 30 天</p>
+    <a href="https://wa.me/60165789873?text=Hi，我想了解 RenoFlow" target="_blank" class="btn-primary">联络我们 →</a>
+  </div>
+</div>
+
+<script>
+  // Nav switching
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      const pageId = 'page-' + item.dataset.page;
+      document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById(pageId);
+      if (target) target.classList.add('active');
+      // Scroll main content to top
+      document.querySelector('.main-content').scrollTop = 0;
+    });
+  });
+
+  // Industry switcher (cosmetic — only 1 industry for RenoFlow)
+  document.querySelectorAll('.industry-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.industry-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
