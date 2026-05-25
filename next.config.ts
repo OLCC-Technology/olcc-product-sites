@@ -28,7 +28,11 @@ const config: NextConfig = {
     return [
       // CarwashFlow
       { source: "/carwashflow", destination: "/carwashflow/index.html" },
+      { source: "/carwashflow/en", destination: "/carwashflow/en/index.html" },
+      { source: "/carwashflow/ms", destination: "/carwashflow/ms/index.html" },
       { source: "/carwashflow/demo", destination: "/carwashflow/demo/index.html" },
+      { source: "/carwashflow/demo/en", destination: "/carwashflow/demo/en/index.html" },
+      { source: "/carwashflow/demo/ms", destination: "/carwashflow/demo/ms/index.html" },
       // EduFlow
       { source: "/eduflow", destination: "/eduflow/index.html" },
       { source: "/eduflow/demo", destination: "/eduflow/demo/index.html" },

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="ms">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CarwashFlow · 洗车中心管理系统 Demo</title>
+<title>CarwashFlow · Demo Sistem Pengurusan Cuci Kereta</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -484,39 +484,39 @@
 
   <!-- Top banner -->
   <div class="top-banner">
-    <div class="banner-left">✨ <strong>CarwashFlow</strong> · 专为洗车 / 汽车美容中心打造的管理系统</div>
-    <button class="banner-cta" onclick="window.open('https://wa.me/60165789873?text=Hi，我想了解 CarwashFlow','_blank')">预约 Demo →</button>
+    <div class="banner-left">✨ <strong>CarwashFlow</strong> · Sistem pengurusan khas untuk pusat cuci kereta & auto detailing</div>
+    <button class="banner-cta" onclick="window.open('https://wa.me/60165789873?text=Hi, saya nak tahu pasal CarwashFlow','_blank')">Tempah demo →</button>
   </div>
 
   <!-- Industry switcher (used as role switcher for CarwashFlow) -->
   <div class="industry-bar">
-    <span class="industry-label">视角切换：</span>
-    <button class="industry-btn active" data-industry="boss">👔 老板视角</button>
-    <button class="industry-btn" data-industry="staff">👨‍🔧 员工视角</button>
-    <button class="industry-btn" data-industry="customer">📱 顾客视角</button>
-    <span class="demo-badge">Demo · 数据为演示用</span>
+    <span class="industry-label">Tukar paparan:</span>
+    <button class="industry-btn active" data-industry="boss">👔 Paparan tauke</button>
+    <button class="industry-btn" data-industry="staff">👨‍🔧 Paparan staf</button>
+    <button class="industry-btn" data-industry="customer">📱 Paparan pelanggan</button>
+    <span class="demo-badge">Demo · data contoh</span>
   </div>
 
   <div class="app-body">
     <aside class="sidebar">
       <div class="brand">
         <div class="brand-name">
-          <span class="brand-logo" id="brandLogo">闪</span>
-          <span id="brandText">闪亮洗车中心</span>
+          <span class="brand-logo" id="brandLogo">S</span>
+          <span id="brandText">ShinePro Car Wash</span>
         </div>
-        <div class="brand-sub" id="brandSub">Austin 总店 · 管理后台</div>
+        <div class="brand-sub" id="brandSub">Austin HQ · Admin</div>
       </div>
-      <div class="nav-section">主要</div>
-      <div class="nav-item active" data-page="dashboard"><span class="nav-icon">📊</span><span>仪表盘</span></div>
-      <div class="nav-item" data-page="services"><span class="nav-icon">🚗</span><span>车型 / 服务</span></div>
-      <div class="nav-item" data-page="members"><span class="nav-icon">⭐</span><span>会员积分</span></div>
-      <div class="nav-item" data-page="customer"><span class="nav-icon">📱</span><span>顾客手机端</span></div>
-      <div class="nav-section">运营</div>
-      <div class="nav-item" data-page="coating"><span class="nav-icon">💎</span><span>Coating 提醒</span></div>
-      <div class="nav-item" data-page="staff"><span class="nav-icon">👨‍🔧</span><span>员工与抽成</span></div>
-      <div class="nav-section">管理</div>
-      <div class="nav-item" data-page="inventory"><span class="nav-icon">📦</span><span>耗材库存</span></div>
-      <div class="nav-item" data-page="branches"><span class="nav-icon">🏬</span><span>多分店监督</span></div>
+      <div class="nav-section">Utama</div>
+      <div class="nav-item active" data-page="dashboard"><span class="nav-icon">📊</span><span>Dashboard</span></div>
+      <div class="nav-item" data-page="services"><span class="nav-icon">🚗</span><span>Kereta / Servis</span></div>
+      <div class="nav-item" data-page="members"><span class="nav-icon">⭐</span><span>Mata ahli</span></div>
+      <div class="nav-item" data-page="customer"><span class="nav-icon">📱</span><span>Portal pelanggan</span></div>
+      <div class="nav-section">Operasi</div>
+      <div class="nav-item" data-page="coating"><span class="nav-icon">💎</span><span>Peringatan Coating</span></div>
+      <div class="nav-item" data-page="staff"><span class="nav-icon">👨‍🔧</span><span>Staf & komisen</span></div>
+      <div class="nav-section">Urus</div>
+      <div class="nav-item" data-page="inventory"><span class="nav-icon">📦</span><span>Stok bahan</span></div>
+      <div class="nav-item" data-page="branches"><span class="nav-icon">🏬</span><span>Banyak cawangan</span></div>
     </aside>
 
     <main class="main-content">
@@ -525,54 +525,54 @@
       <div class="page-section active" id="page-dashboard">
         <div class="page-header">
           <div>
-            <div class="page-title" id="dashTitle">早安，黄老板 👋</div>
-            <div class="page-sub" id="dashSub">这是今天的闪亮洗车中心 · Austin 总店概况</div>
+            <div class="page-title" id="dashTitle">Selamat pagi, Tauke 👋</div>
+            <div class="page-sub" id="dashSub">Ringkasan ShinePro Car Wash · Austin HQ hari ini</div>
           </div>
-          <button class="btn-primary">📥 导出报表</button>
+          <button class="btn-primary">📥 Eksport laporan</button>
         </div>
         <div class="stat-row">
           <div class="stat-card">
-            <div class="stat-label">今日洗车</div>
-            <div class="stat-value">38 <span class="stat-unit">台</span></div>
-            <div class="stat-trend up">↑ +6 台 vs 昨天</div>
+            <div class="stat-label">Cucian hari ini</div>
+            <div class="stat-value">38 <span class="stat-unit">kereta</span></div>
+            <div class="stat-trend up">↑ +6 kereta vs semalam</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">今日营业额</div>
+            <div class="stat-label">Jualan hari ini</div>
             <div class="stat-value">RM 2,840</div>
-            <div class="stat-trend up">↑ 12% vs 上周同日</div>
+            <div class="stat-trend up">↑ 12% vs hari sama minggu lepas</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">活跃会员</div>
-            <div class="stat-value">312 <span class="stat-unit">位</span></div>
-            <div class="stat-trend up">↑ +12 位（本月）</div>
+            <div class="stat-label">Ahli aktif</div>
+            <div class="stat-value">312 <span class="stat-unit">orang</span></div>
+            <div class="stat-trend up">↑ +12 (bulan ini)</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Coating 本周到期</div>
-            <div class="stat-value">7 <span class="stat-unit">位</span></div>
-            <div class="stat-trend warn">⚠ 已发提醒</div>
+            <div class="stat-label">Coating tamat minggu ini</div>
+            <div class="stat-value">7 <span class="stat-unit">pelanggan</span></div>
+            <div class="stat-trend warn">⚠ Peringatan dihantar</div>
           </div>
         </div>
 
         <div class="card">
-          <h3 class="card-title">📋 今日待办</h3>
+          <h3 class="card-title">📋 Senarai hari ini</h3>
           <ul class="todo-list">
-            <li><span class="todo-tag tag-info">进行中</span> 陈先生 · SUV (JJK 8881) · Premium Wash + Wax · 工位 2</li>
-            <li><span class="todo-tag tag-warn">待核销</span> 林女士 · 500 分兑换 — 免费洗车一次</li>
-            <li><span class="todo-tag tag-info">预约</span> 黄太太 · 2:30 PM · MPV 全套清洁</li>
-            <li><span class="todo-tag tag-good">就绪</span> 本月员工抽成报表已生成 · 待审核</li>
-            <li><span class="todo-tag tag-warn">低库存</span> Coating 剂剩 3 瓶 · 建议补货</li>
+            <li><span class="todo-tag tag-info">Sedang dibuat</span> En. Tan · SUV (JJK 8881) · Premium Wash + Wax · Bay 2</li>
+            <li><span class="todo-tag tag-warn">Untuk tebus</span> Pn. Lim · 500 mata → cuci percuma</li>
+            <li><span class="todo-tag tag-info">Tempahan</span> Pn. Wong · 2:30 PM · MPV full detail</li>
+            <li><span class="todo-tag tag-good">Sedia</span> Laporan komisen staf siap · menunggu semakan</li>
+            <li><span class="todo-tag tag-warn">Stok rendah</span> Cecair Coating tinggal 3 botol · cadangan tempah semula</li>
           </ul>
         </div>
 
         <div class="card">
-          <h3 class="card-title">📈 本月营业额走势</h3>
+          <h3 class="card-title">📈 Trend jualan bulan ini</h3>
           <div class="chart-bars">
             <div class="bar" style="height:60%"><span>W1</span></div>
             <div class="bar" style="height:75%"><span>W2</span></div>
             <div class="bar" style="height:68%"><span>W3</span></div>
-            <div class="bar active" style="height:88%"><span>本周</span></div>
+            <div class="bar active" style="height:88%"><span>Mgg ini</span></div>
           </div>
-          <div class="chart-sub">本月预计营业额：<strong>RM 68,500</strong> · 超过上月 8%</div>
+          <div class="chart-sub">Anggaran jualan bulan ini: <strong>RM 68,500</strong> · +8% vs bulan lepas</div>
         </div>
       </div>
 
@@ -580,46 +580,46 @@
       <div class="page-section" id="page-services">
         <div class="page-header">
           <div>
-            <div class="page-title">车型 / 服务配套</div>
-            <div class="page-sub">员工选车型，价格自动带出 — 不再问老板</div>
+            <div class="page-title">Pakej kereta & servis</div>
+            <div class="page-sub">Staf pilih jenis kereta, harga muncul automatik — tak perlu tanya tauke</div>
           </div>
-          <button class="btn-primary">+ 新增配套</button>
+          <button class="btn-primary">+ Tambah pakej</button>
         </div>
 
         <div class="card">
-          <h3 class="card-title">🚗 选车型快速下单（员工端模拟）</h3>
+          <h3 class="card-title">🚗 Pesanan pantas ikut jenis kereta (simulasi staf)</h3>
           <div class="vehicle-grid">
             <div class="vehicle-card selected">
               <div class="vehicle-icon">🚙</div>
               <div class="vehicle-name">Sedan</div>
-              <div class="vehicle-sub">轿车 (Saga / Vios / Bezza)</div>
+              <div class="vehicle-sub">Sedan (Saga / Vios / Bezza)</div>
             </div>
             <div class="vehicle-card">
               <div class="vehicle-icon">🚐</div>
               <div class="vehicle-name">SUV</div>
-              <div class="vehicle-sub">运动型 (CRV / X70)</div>
+              <div class="vehicle-sub">Sport (CRV / X70)</div>
             </div>
             <div class="vehicle-card">
               <div class="vehicle-icon">🚌</div>
               <div class="vehicle-name">MPV</div>
-              <div class="vehicle-sub">7 座 (Alza / Alphard)</div>
+              <div class="vehicle-sub">7 tempat duduk (Alza / Alphard)</div>
             </div>
             <div class="vehicle-card">
               <div class="vehicle-icon">🛻</div>
               <div class="vehicle-name">Pickup</div>
-              <div class="vehicle-sub">皮卡 (Hilux / Triton)</div>
+              <div class="vehicle-sub">Pickup (Hilux / Triton)</div>
             </div>
           </div>
-          <div class="service-list-title">📋 Sedan 可选服务</div>
+          <div class="service-list-title">📋 Servis untuk Sedan</div>
           <table>
-            <thead><tr><th>服务</th><th>时长</th><th>价格</th><th>积分</th><th></th></tr></thead>
+            <thead><tr><th>Servis</th><th>Tempoh</th><th>Harga</th><th>Mata</th><th></th></tr></thead>
             <tbody>
-              <tr><td>Basic Wash 基本洗车</td><td>15 min</td><td>RM 18</td><td>+18</td><td><button class="row-btn">选择</button></td></tr>
-              <tr><td>Premium Wash + Wax 上蜡</td><td>30 min</td><td>RM 35</td><td>+35</td><td><button class="row-btn">选择</button></td></tr>
-              <tr><td>Interior Vacuum 内部吸尘</td><td>20 min</td><td>RM 25</td><td>+25</td><td><button class="row-btn">选择</button></td></tr>
-              <tr><td>Full Detail 全套深度清洁</td><td>2 hr</td><td>RM 120</td><td>+120</td><td><button class="row-btn">选择</button></td></tr>
-              <tr><td>Coating 3 个月 (Nano)</td><td>3 hr</td><td>RM 280</td><td>+280</td><td><button class="row-btn">选择</button></td></tr>
-              <tr><td>Coating 6 个月 (Ceramic)</td><td>4 hr</td><td>RM 580</td><td>+580</td><td><button class="row-btn">选择</button></td></tr>
+              <tr><td>Basic Wash</td><td>15 min</td><td>RM 18</td><td>+18</td><td><button class="row-btn">Pilih</button></td></tr>
+              <tr><td>Premium Wash + Wax</td><td>30 min</td><td>RM 35</td><td>+35</td><td><button class="row-btn">Pilih</button></td></tr>
+              <tr><td>Interior Vacuum</td><td>20 min</td><td>RM 25</td><td>+25</td><td><button class="row-btn">Pilih</button></td></tr>
+              <tr><td>Full Detail</td><td>2 hr</td><td>RM 120</td><td>+120</td><td><button class="row-btn">Pilih</button></td></tr>
+              <tr><td>Coating 3-bulan (Nano)</td><td>3 hr</td><td>RM 280</td><td>+280</td><td><button class="row-btn">Pilih</button></td></tr>
+              <tr><td>Coating 6-bulan (Ceramic)</td><td>4 hr</td><td>RM 580</td><td>+580</td><td><button class="row-btn">Pilih</button></td></tr>
             </tbody>
           </table>
         </div>
@@ -629,36 +629,36 @@
       <div class="page-section" id="page-members">
         <div class="page-header">
           <div>
-            <div class="page-title">会员积分系统</div>
-            <div class="page-sub">312 位活跃会员 · 本月新增 12 位</div>
+            <div class="page-title">Sistem mata keahlian</div>
+            <div class="page-sub">312 ahli aktif · 12 baru bulan ini</div>
           </div>
-          <button class="btn-primary">+ 新增会员</button>
+          <button class="btn-primary">+ Tambah ahli</button>
         </div>
 
         <div class="card">
-          <h3 class="card-title">🎁 积分兑换设置</h3>
+          <h3 class="card-title">🎁 Katalog ganjaran</h3>
           <table>
-            <thead><tr><th>奖励</th><th>所需积分</th><th>本月兑换次数</th><th>状态</th></tr></thead>
+            <thead><tr><th>Ganjaran</th><th>Mata diperlukan</th><th>Ditebus bulan ini</th><th>Status</th></tr></thead>
             <tbody>
-              <tr><td>免费 Basic Wash 一次</td><td>500 分</td><td>23 次</td><td><span class="tag-good">启用</span></td></tr>
-              <tr><td>免费 Premium Wash + Wax</td><td>1,000 分</td><td>11 次</td><td><span class="tag-good">启用</span></td></tr>
-              <tr><td>Coating 3 个月 半价</td><td>1,500 分</td><td>4 次</td><td><span class="tag-good">启用</span></td></tr>
-              <tr><td>Full Detail 8 折</td><td>800 分</td><td>7 次</td><td><span class="tag-good">启用</span></td></tr>
-              <tr><td>生日礼 — 免费洗车 + 内部吸尘</td><td>本月寿星</td><td>9 次</td><td><span class="tag-good">自动</span></td></tr>
+              <tr><td>1× Basic Wash percuma</td><td>500 mata</td><td>23×</td><td><span class="tag-good">Aktif</span></td></tr>
+              <tr><td>Premium Wash + Wax percuma</td><td>1,000 mata</td><td>11×</td><td><span class="tag-good">Aktif</span></td></tr>
+              <tr><td>Coating 3-bulan · separuh harga</td><td>1,500 mata</td><td>4×</td><td><span class="tag-good">Aktif</span></td></tr>
+              <tr><td>Full Detail · 20% off</td><td>800 mata</td><td>7×</td><td><span class="tag-good">Aktif</span></td></tr>
+              <tr><td>Hadiah harijadi — cuci percuma + vakum dalaman</td><td>Bulan kelahiran</td><td>9×</td><td><span class="tag-good">Auto</span></td></tr>
             </tbody>
           </table>
         </div>
 
         <div class="card">
-          <h3 class="card-title">👥 会员名单 Top 顾客</h3>
+          <h3 class="card-title">👥 Pelanggan teratas</h3>
           <table>
-            <thead><tr><th>会员</th><th>车型</th><th>累积积分</th><th>上次到店</th><th>消费总额</th></tr></thead>
+            <thead><tr><th>Ahli</th><th>Kereta</th><th>Mata</th><th>Lawatan terakhir</th><th>Jumlah belanja</th></tr></thead>
             <tbody>
-              <tr><td>张老板 (JJK 1234)</td><td>SUV</td><td>1,250 分</td><td>3 天前</td><td>RM 2,180</td></tr>
-              <tr><td>陈先生 (JHY 5588)</td><td>Sedan</td><td>980 分</td><td>昨天</td><td>RM 1,720</td></tr>
-              <tr><td>林女士 (JPL 8899)</td><td>MPV</td><td>820 分</td><td>今天</td><td>RM 1,450</td></tr>
-              <tr><td>黄太太 (JQS 2200)</td><td>SUV</td><td>650 分</td><td>1 周前</td><td>RM 1,180</td></tr>
-              <tr><td>Mr. Tan (BMW)</td><td>Sedan</td><td>1,580 分</td><td>5 天前</td><td>RM 2,860</td></tr>
+              <tr><td>En. Chong (JJK 1234)</td><td>SUV</td><td>1,250 mata</td><td>3 hari lalu</td><td>RM 2,180</td></tr>
+              <tr><td>En. Tan (JHY 5588)</td><td>Sedan</td><td>980 mata</td><td>Semalam</td><td>RM 1,720</td></tr>
+              <tr><td>Pn. Lim (JPL 8899)</td><td>MPV</td><td>820 mata</td><td>Hari ini</td><td>RM 1,450</td></tr>
+              <tr><td>Pn. Wong (JQS 2200)</td><td>SUV</td><td>650 mata</td><td>1 minggu lalu</td><td>RM 1,180</td></tr>
+              <tr><td>Mr. Tan (BMW)</td><td>Sedan</td><td>1,580 mata</td><td>5 hari lalu</td><td>RM 2,860</td></tr>
             </tbody>
           </table>
         </div>
@@ -668,44 +668,44 @@
       <div class="page-section" id="page-customer">
         <div class="page-header">
           <div>
-            <div class="page-title">顾客手机端预览</div>
-            <div class="page-sub">顾客 WhatsApp 收到链接 → 加到主屏 → 即用</div>
+            <div class="page-title">Pratonton portal pelanggan</div>
+            <div class="page-sub">Pelanggan terima link WhatsApp → tambah ke skrin utama → guna terus</div>
           </div>
         </div>
 
         <div class="phone-wrap">
           <div class="phone-frame">
             <div class="phone-header">
-              <div class="phone-greet">嗨，张老板 👋</div>
-              <div class="phone-sub">闪亮洗车中心 · 会员</div>
+              <div class="phone-greet">Hi, En. Chong 👋</div>
+              <div class="phone-sub">ShinePro Car Wash · Ahli</div>
             </div>
             <div class="phone-points-card">
-              <div class="phone-points-label">您的积分</div>
+              <div class="phone-points-label">Mata anda</div>
               <div class="phone-points-value">1,250</div>
-              <div class="phone-points-sub">下一档 1,500 分 — Coating 半价</div>
+              <div class="phone-points-sub">Tahap seterusnya 1,500 mata — Coating separuh harga</div>
             </div>
-            <div class="phone-section-title">🎁 可兑换</div>
+            <div class="phone-section-title">🎁 Ganjaran tersedia</div>
             <div class="phone-reward">
               <div class="phone-reward-l">
-                <div class="phone-reward-name">免费 Premium Wash</div>
-                <div class="phone-reward-sub">需 1,000 分 · 您有 1,250 分</div>
+                <div class="phone-reward-name">Premium Wash percuma</div>
+                <div class="phone-reward-sub">Perlu 1,000 mata · Anda ada 1,250</div>
               </div>
-              <button class="phone-cta">兑换</button>
+              <button class="phone-cta">Tebus</button>
             </div>
             <div class="phone-reward">
               <div class="phone-reward-l">
-                <div class="phone-reward-name">Full Detail 8 折</div>
-                <div class="phone-reward-sub">需 800 分 · 您有 1,250 分</div>
+                <div class="phone-reward-name">Full Detail · 20% off</div>
+                <div class="phone-reward-sub">Perlu 800 mata · Anda ada 1,250</div>
               </div>
-              <button class="phone-cta">兑换</button>
+              <button class="phone-cta">Tebus</button>
             </div>
-            <div class="phone-section-title">📋 我的纪录</div>
+            <div class="phone-section-title">📋 Sejarah saya</div>
             <div class="phone-history">
-              <div class="phone-hist-item"><span>Premium Wash + Wax</span><span class="hist-date">3 天前 · RM 45</span></div>
-              <div class="phone-hist-item"><span>Coating 6 个月</span><span class="hist-date">3 个月前 · RM 680</span></div>
-              <div class="phone-hist-item"><span>Basic Wash</span><span class="hist-date">3 周前 · RM 22</span></div>
+              <div class="phone-hist-item"><span>Premium Wash + Wax</span><span class="hist-date">3 hari lalu · RM 45</span></div>
+              <div class="phone-hist-item"><span>Coating 6-bulan</span><span class="hist-date">3 bulan lalu · RM 680</span></div>
+              <div class="phone-hist-item"><span>Basic Wash</span><span class="hist-date">3 minggu lalu · RM 22</span></div>
             </div>
-            <div class="phone-bottom-cta">📅 预约下次洗车</div>
+            <div class="phone-bottom-cta">📅 Tempah cucian seterusnya</div>
           </div>
         </div>
       </div>
@@ -714,27 +714,27 @@
       <div class="page-section" id="page-coating">
         <div class="page-header">
           <div>
-            <div class="page-title">Coating 周期管理</div>
-            <div class="page-sub">自动追踪每位顾客 Coating 到期日，提前 WhatsApp 提醒</div>
+            <div class="page-title">Kitaran Coating</div>
+            <div class="page-sub">Jejak automatik tarikh tamat Coating setiap pelanggan, peringatan WhatsApp dihantar awal</div>
           </div>
-          <button class="btn-primary">+ 记录新 Coating</button>
+          <button class="btn-primary">+ Rekod Coating baru</button>
         </div>
 
         <div class="card">
-          <h3 class="card-title">⏰ 本周到期 / 即将到期</h3>
+          <h3 class="card-title">⏰ Tamat minggu ini / akan datang</h3>
           <table>
-            <thead><tr><th>顾客</th><th>车牌</th><th>Coating 类型</th><th>上次日期</th><th>到期日</th><th>提醒状态</th></tr></thead>
+            <thead><tr><th>Pelanggan</th><th>No. plat</th><th>Jenis Coating</th><th>Tarikh akhir</th><th>Tamat</th><th>Peringatan</th></tr></thead>
             <tbody>
-              <tr><td>张老板</td><td>JJK 1234</td><td>Ceramic 6 个月</td><td>2025-11-23</td><td><strong>明天</strong></td><td><span class="tag-good">✓ 已发 WhatsApp</span></td></tr>
-              <tr><td>Mr. Tan</td><td>BMW 8888</td><td>Nano 3 个月</td><td>2026-02-20</td><td>3 天后</td><td><span class="tag-good">✓ 已发</span></td></tr>
-              <tr><td>陈先生</td><td>JHY 5588</td><td>Ceramic 6 个月</td><td>2025-11-25</td><td>3 天后</td><td><span class="tag-good">✓ 已发</span></td></tr>
-              <tr><td>林女士</td><td>JPL 8899</td><td>Nano 3 个月</td><td>2026-02-22</td><td>5 天后</td><td><span class="tag-warn">⏳ 排队中</span></td></tr>
-              <tr><td>黄太太</td><td>JQS 2200</td><td>Ceramic 12 个月</td><td>2025-05-20</td><td>7 天后</td><td><span class="tag-warn">⏳ 排队中</span></td></tr>
-              <tr><td>李先生</td><td>JKL 7766</td><td>Nano 3 个月</td><td>2026-02-25</td><td>7 天后</td><td><span class="tag-warn">⏳ 排队中</span></td></tr>
-              <tr><td>Mr. Lim</td><td>JJM 4321</td><td>Ceramic 6 个月</td><td>2025-12-01</td><td>9 天后</td><td><span class="tag-warn">⏳ 排队中</span></td></tr>
+              <tr><td>En. Chong</td><td>JJK 1234</td><td>Ceramic 6-bulan</td><td>2025-11-23</td><td><strong>Esok</strong></td><td><span class="tag-good">✓ WhatsApp dihantar</span></td></tr>
+              <tr><td>Mr. Tan</td><td>BMW 8888</td><td>Nano 3-bulan</td><td>2026-02-20</td><td>3 hari lagi</td><td><span class="tag-good">✓ Dihantar</span></td></tr>
+              <tr><td>En. Tan Jr.</td><td>JHY 5588</td><td>Ceramic 6-bulan</td><td>2025-11-25</td><td>3 hari lagi</td><td><span class="tag-good">✓ Dihantar</span></td></tr>
+              <tr><td>Pn. Lim</td><td>JPL 8899</td><td>Nano 3-bulan</td><td>2026-02-22</td><td>5 hari lagi</td><td><span class="tag-warn">⏳ Beratur</span></td></tr>
+              <tr><td>Pn. Wong</td><td>JQS 2200</td><td>Ceramic 12-bulan</td><td>2025-05-20</td><td>7 hari lagi</td><td><span class="tag-warn">⏳ Beratur</span></td></tr>
+              <tr><td>En. Lee</td><td>JKL 7766</td><td>Nano 3-bulan</td><td>2026-02-25</td><td>7 hari lagi</td><td><span class="tag-warn">⏳ Beratur</span></td></tr>
+              <tr><td>Mr. Lim</td><td>JJM 4321</td><td>Ceramic 6-bulan</td><td>2025-12-01</td><td>9 hari lagi</td><td><span class="tag-warn">⏳ Beratur</span></td></tr>
             </tbody>
           </table>
-          <div class="chart-sub">💡 系统会在到期前 14、7、1 天分别发 WhatsApp 提醒，顾客回头率提升明显</div>
+          <div class="chart-sub">💡 Sistem hantar peringatan WhatsApp pada 14, 7 dan 1 hari sebelum tamat — kadar pulangan meningkat ketara</div>
         </div>
       </div>
 
@@ -742,27 +742,27 @@
       <div class="page-section" id="page-staff">
         <div class="page-header">
           <div>
-            <div class="page-title">员工与抽成</div>
-            <div class="page-sub">每位员工的工作量 + 抽成系统自动算</div>
+            <div class="page-title">Staf & komisen</div>
+            <div class="page-sub">Beban kerja + komisen setiap staf dikira automatik</div>
           </div>
-          <button class="btn-primary">📥 导出抽成单</button>
+          <button class="btn-primary">📥 Eksport slip komisen</button>
         </div>
 
         <div class="card">
-          <h3 class="card-title">💰 本月员工抽成（5 月 1 - 22 日）</h3>
+          <h3 class="card-title">💰 Komisen staf bulan ini (1–22 Mei)</h3>
           <table>
-            <thead><tr><th>员工</th><th>洗车数</th><th>Coating 数</th><th>实收</th><th>抽成 %</th><th>本月抽成</th></tr></thead>
+            <thead><tr><th>Staf</th><th>Cucian</th><th>Coating</th><th>Jualan</th><th>Kadar</th><th>Komisen</th></tr></thead>
             <tbody>
-              <tr><td>阿杰 (师傅)</td><td>148 台</td><td>12 次</td><td>RM 12,400</td><td>15%</td><td><strong>RM 1,860</strong></td></tr>
-              <tr><td>小陈</td><td>132 台</td><td>8 次</td><td>RM 9,800</td><td>12%</td><td><strong>RM 1,176</strong></td></tr>
-              <tr><td>Ah Boy</td><td>118 台</td><td>5 次</td><td>RM 7,200</td><td>12%</td><td><strong>RM 864</strong></td></tr>
-              <tr><td>Manesh</td><td>96 台</td><td>3 次</td><td>RM 5,400</td><td>10%</td><td><strong>RM 540</strong></td></tr>
+              <tr><td>Ah Jie (ketua)</td><td>148</td><td>12</td><td>RM 12,400</td><td>15%</td><td><strong>RM 1,860</strong></td></tr>
+              <tr><td>Xiao Chen</td><td>132</td><td>8</td><td>RM 9,800</td><td>12%</td><td><strong>RM 1,176</strong></td></tr>
+              <tr><td>Ah Boy</td><td>118</td><td>5</td><td>RM 7,200</td><td>12%</td><td><strong>RM 864</strong></td></tr>
+              <tr><td>Manesh</td><td>96</td><td>3</td><td>RM 5,400</td><td>10%</td><td><strong>RM 540</strong></td></tr>
             </tbody>
             <tfoot>
-              <tr><td colspan="5"><strong>本月总抽成</strong></td><td><strong>RM 4,440</strong></td></tr>
+              <tr><td colspan="5"><strong>Jumlah bulan ini</strong></td><td><strong>RM 4,440</strong></td></tr>
             </tfoot>
           </table>
-          <div class="chart-sub">💡 每位员工手机端可自己查每天 / 每月的抽成明细，透明不吵架</div>
+          <div class="chart-sub">💡 Setiap staf boleh semak komisen harian / bulanan sendiri di telefon — telus, tiada pertikaian</div>
         </div>
       </div>
 
@@ -770,24 +770,24 @@
       <div class="page-section" id="page-inventory">
         <div class="page-header">
           <div>
-            <div class="page-title">耗材库存</div>
-            <div class="page-sub">洗车液、Coating 剂、毛巾 — 低库存自动提醒</div>
+            <div class="page-title">Stok bahan</div>
+            <div class="page-sub">Syampu, cecair Coating, tuala — amaran stok rendah automatik</div>
           </div>
-          <button class="btn-primary">+ 进货纪录</button>
+          <button class="btn-primary">+ Rekod belian</button>
         </div>
 
         <div class="card">
-          <h3 class="card-title">📦 当前库存</h3>
+          <h3 class="card-title">📦 Stok semasa</h3>
           <table>
-            <thead><tr><th>耗材</th><th>当前库存</th><th>本月消耗</th><th>预计可用</th><th>状态</th></tr></thead>
+            <thead><tr><th>Item</th><th>Stok ada</th><th>Guna bulan ini</th><th>Hari tinggal</th><th>Status</th></tr></thead>
             <tbody>
-              <tr><td>洗车液 Shampoo (5L)</td><td>18 桶</td><td>22 桶/月</td><td>~24 天</td><td><span class="tag-good">充足</span></td></tr>
-              <tr><td>Wax 上蜡剂 (1L)</td><td>12 瓶</td><td>14 瓶/月</td><td>~26 天</td><td><span class="tag-good">充足</span></td></tr>
-              <tr><td>Nano Coating 剂 (500ml)</td><td>3 瓶</td><td>8 瓶/月</td><td>~12 天</td><td><span class="tag-warn">⚠ 偏低</span></td></tr>
-              <tr><td>Ceramic Coating 剂 (250ml)</td><td>6 瓶</td><td>5 瓶/月</td><td>~36 天</td><td><span class="tag-good">充足</span></td></tr>
-              <tr><td>Microfiber 毛巾</td><td>240 条</td><td>180 条/月</td><td>~40 天</td><td><span class="tag-good">充足</span></td></tr>
-              <tr><td>内饰清洁剂 (1L)</td><td>2 瓶</td><td>6 瓶/月</td><td>~10 天</td><td><span class="tag-warn">⚠ 偏低</span></td></tr>
-              <tr><td>玻璃水 (5L)</td><td>0 桶</td><td>3 桶/月</td><td>缺货</td><td><span class="tag-danger">🚨 缺货</span></td></tr>
+              <tr><td>Syampu (5L)</td><td>18 tong</td><td>22 / bulan</td><td>~24 hari</td><td><span class="tag-good">Cukup</span></td></tr>
+              <tr><td>Wax (1L)</td><td>12 botol</td><td>14 / bulan</td><td>~26 hari</td><td><span class="tag-good">Cukup</span></td></tr>
+              <tr><td>Cecair Nano Coating (500ml)</td><td>3 botol</td><td>8 / bulan</td><td>~12 hari</td><td><span class="tag-warn">⚠ Rendah</span></td></tr>
+              <tr><td>Cecair Ceramic Coating (250ml)</td><td>6 botol</td><td>5 / bulan</td><td>~36 hari</td><td><span class="tag-good">Cukup</span></td></tr>
+              <tr><td>Tuala microfiber</td><td>240</td><td>180 / bulan</td><td>~40 hari</td><td><span class="tag-good">Cukup</span></td></tr>
+              <tr><td>Pencuci dalaman (1L)</td><td>2 botol</td><td>6 / bulan</td><td>~10 hari</td><td><span class="tag-warn">⚠ Rendah</span></td></tr>
+              <tr><td>Pencuci cermin (5L)</td><td>0</td><td>3 / bulan</td><td>Habis</td><td><span class="tag-danger">🚨 Habis stok</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -797,53 +797,53 @@
       <div class="page-section" id="page-branches">
         <div class="page-header">
           <div>
-            <div class="page-title">多分店远程监督</div>
-            <div class="page-sub">一个 login 看所有分店 · 老板手机随时看</div>
+            <div class="page-title">Pemantauan pelbagai cawangan</div>
+            <div class="page-sub">Satu login meliputi semua cawangan · tauke boleh semak di telefon bila-bila</div>
           </div>
-          <button class="btn-primary">+ 新增分店</button>
+          <button class="btn-primary">+ Tambah cawangan</button>
         </div>
 
         <div class="branch-grid">
           <div class="branch-card">
-            <div class="branch-name">Austin 总店</div>
+            <div class="branch-name">Austin HQ</div>
             <div class="branch-stats">
-              <div><span class="bs-label">今日</span><span class="bs-value">38 台 · RM 2,840</span></div>
-              <div><span class="bs-label">本月</span><span class="bs-value">820 台 · RM 62,400</span></div>
-              <div><span class="bs-label">员工</span><span class="bs-value">4 人 (在场)</span></div>
-              <div><span class="bs-label">会员</span><span class="bs-value">312 位</span></div>
+              <div><span class="bs-label">Hari ini</span><span class="bs-value">38 kereta · RM 2,840</span></div>
+              <div><span class="bs-label">Bulan</span><span class="bs-value">820 kereta · RM 62,400</span></div>
+              <div><span class="bs-label">Staf</span><span class="bs-value">4 (hadir)</span></div>
+              <div><span class="bs-label">Ahli</span><span class="bs-value">312</span></div>
             </div>
-            <div class="branch-status tag-good">✓ 运作中</div>
+            <div class="branch-status tag-good">✓ Beroperasi</div>
           </div>
           <div class="branch-card">
-            <div class="branch-name">Skudai 分店</div>
+            <div class="branch-name">Cawangan Skudai</div>
             <div class="branch-stats">
-              <div><span class="bs-label">今日</span><span class="bs-value">26 台 · RM 1,920</span></div>
-              <div><span class="bs-label">本月</span><span class="bs-value">610 台 · RM 44,200</span></div>
-              <div><span class="bs-label">员工</span><span class="bs-value">3 人 (在场)</span></div>
-              <div><span class="bs-label">会员</span><span class="bs-value">186 位</span></div>
+              <div><span class="bs-label">Hari ini</span><span class="bs-value">26 kereta · RM 1,920</span></div>
+              <div><span class="bs-label">Bulan</span><span class="bs-value">610 kereta · RM 44,200</span></div>
+              <div><span class="bs-label">Staf</span><span class="bs-value">3 (hadir)</span></div>
+              <div><span class="bs-label">Ahli</span><span class="bs-value">186</span></div>
             </div>
-            <div class="branch-status tag-good">✓ 运作中</div>
+            <div class="branch-status tag-good">✓ Beroperasi</div>
           </div>
           <div class="branch-card">
-            <div class="branch-name">Mount Austin 新店</div>
+            <div class="branch-name">Mount Austin (baru)</div>
             <div class="branch-stats">
-              <div><span class="bs-label">今日</span><span class="bs-value">14 台 · RM 1,080</span></div>
-              <div><span class="bs-label">本月</span><span class="bs-value">128 台 · RM 9,200</span></div>
-              <div><span class="bs-label">员工</span><span class="bs-value">2 人 (在场)</span></div>
-              <div><span class="bs-label">会员</span><span class="bs-value">42 位 (筹备中)</span></div>
+              <div><span class="bs-label">Hari ini</span><span class="bs-value">14 kereta · RM 1,080</span></div>
+              <div><span class="bs-label">Bulan</span><span class="bs-value">128 kereta · RM 9,200</span></div>
+              <div><span class="bs-label">Staf</span><span class="bs-value">2 (hadir)</span></div>
+              <div><span class="bs-label">Ahli</span><span class="bs-value">42 (sedang membesar)</span></div>
             </div>
-            <div class="branch-status tag-warn">⏳ 试营业</div>
+            <div class="branch-status tag-warn">⏳ Pelancaran lembut</div>
           </div>
         </div>
 
         <div class="card">
-          <h3 class="card-title">📊 三店对比 · 本月营业额</h3>
+          <h3 class="card-title">📊 Perbandingan 3 cawangan · jualan bulan ini</h3>
           <div class="chart-bars">
             <div class="bar" style="height:88%"><span>Austin</span></div>
             <div class="bar" style="height:64%"><span>Skudai</span></div>
             <div class="bar" style="height:18%"><span>Mt Austin</span></div>
           </div>
-          <div class="chart-sub">本月总营业额：<strong>RM 115,800</strong> · 同比上月 +14%</div>
+          <div class="chart-sub">Jumlah bulan ini: <strong>RM 115,800</strong> · +14% vs bulan lepas</div>
         </div>
       </div>
 
@@ -852,9 +852,9 @@
 
   <!-- Bottom CTA -->
   <div class="bottom-cta">
-    <h3>想知道您的洗车中心可以怎样使用 CarwashFlow？</h3>
-    <p>WhatsApp 我们预约 30 分钟讲解 · 免费 · 不绑约</p>
-    <a href="https://wa.me/60165789873?text=Hi，我想了解 CarwashFlow" class="bottom-cta-btn" target="_blank">📱 WhatsApp +60 16-578 9873</a>
+    <h3>Ingin tahu cara pusat cuci kereta anda boleh guna CarwashFlow?</h3>
+    <p>WhatsApp kami untuk tempah sesi 30 minit · percuma · tiada kontrak</p>
+    <a href="https://wa.me/60165789873?text=Hi, saya nak tahu pasal CarwashFlow" class="bottom-cta-btn" target="_blank">📱 WhatsApp +60 16-578 9873</a>
   </div>
 
 </div>
@@ -951,19 +951,19 @@
   // Role / industry switcher — swaps perspective hints
   const roles = {
     boss: {
-      brandLogo: '闪', brandText: '闪亮洗车中心', brandSub: 'Austin 总店 · 老板视角',
-      dashTitle: '早安，黄老板 👋',
-      dashSub: '这是今天的闪亮洗车中心 · 您可以看所有数据'
+      brandLogo: 'S', brandText: 'ShinePro Car Wash', brandSub: 'Austin HQ · Paparan tauke',
+      dashTitle: 'Selamat pagi, Tauke 👋',
+      dashSub: 'Ringkasan ShinePro · anda boleh lihat semua data'
     },
     staff: {
-      brandLogo: '闪', brandText: '闪亮洗车中心', brandSub: 'Austin 总店 · 员工：阿杰',
-      dashTitle: '早安，阿杰师傅 👋',
-      dashSub: '今天您已洗了 6 台 · 抽成 RM 84'
+      brandLogo: 'S', brandText: 'ShinePro Car Wash', brandSub: 'Austin HQ · Staf: Ah Jie',
+      dashTitle: 'Selamat pagi, Ah Jie 👋',
+      dashSub: 'Anda dah cuci 6 kereta hari ini · komisen RM 84'
     },
     customer: {
-      brandLogo: '⭐', brandText: '我的会员卡', brandSub: '闪亮洗车 · 张老板',
-      dashTitle: '嗨，张老板 👋',
-      dashSub: '您有 1,250 积分，可以兑换 Premium Wash 了！'
+      brandLogo: '⭐', brandText: 'Kad ahli saya', brandSub: 'ShinePro · En. Chong',
+      dashTitle: 'Hi, En. Chong 👋',
+      dashSub: 'Anda ada 1,250 mata — cukup untuk tebus Premium Wash!'
     }
   };
 

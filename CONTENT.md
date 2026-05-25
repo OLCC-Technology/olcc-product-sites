@@ -7,6 +7,41 @@ Everything a non-developer is likely to change — prices, WhatsApp number, FAQ 
 
 ---
 
+## Language switcher
+
+A floating dropdown appears in the top-right corner of every page if more than one language is available for that page. Controlled by the `<meta name="olcc-langs">` tag in each HTML file's `<head>`.
+
+- **Live for:** CarwashFlow landing + demo (zh, en, ms)
+- **Pending:** EduFlow, TripFlow, RenoFlow (zh only — switcher hidden until translations land)
+
+URL convention:
+- `/<product>` → zh (default, no language segment)
+- `/<product>/en` → English
+- `/<product>/ms` → Bahasa Malaysia
+- `/<product>/demo/en` → English demo (and similar for `/ms`)
+
+### How to add EN + MS for another product
+
+1. **Translate** `public/<product>/index.html` into English. Save as `public/<product>/en/index.html`.
+2. **Translate** `public/<product>/index.html` into Bahasa Malaysia. Save as `public/<product>/ms/index.html`.
+3. Repeat for `public/<product>/demo/index.html` if there's a demo.
+4. Edit each translated file's `<meta name="olcc-langs">` (already injected at the top of `<head>`) and change `content="zh"` to `content="zh,en,ms"`.
+5. **Also update the original Chinese HTML** — change its meta tag to `content="zh,en,ms"` too, so the switcher shows up on the zh page.
+6. Add rewrite entries to `next.config.ts`:
+   ```ts
+   { source: "/<product>/en",       destination: "/<product>/en/index.html" },
+   { source: "/<product>/ms",       destination: "/<product>/ms/index.html" },
+   { source: "/<product>/demo/en",  destination: "/<product>/demo/en/index.html" },
+   { source: "/<product>/demo/ms",  destination: "/<product>/demo/ms/index.html" },
+   ```
+7. Commit and push — auto-deploys in ~30s.
+
+### Reference: CarwashFlow translation scripts
+
+When CarwashFlow was translated, the Chinese → English/Malay mapping was captured in throwaway scripts at `/tmp/translate-carwashflow-{en,ms}.mjs` and `/tmp/translate-carwashflow-demo-{en,ms}.mjs`. These scripts contain the canonical OLCC brand voice in each language (e.g. "tauke" not "boss" for Malay, "ShinePro" as the mock business name, etc.) — useful as reference when translating sibling products.
+
+---
+
 ## CarwashFlow — landing page
 
 **File:** `public/carwashflow/index.html`
