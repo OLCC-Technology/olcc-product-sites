@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN"
+  data-title-zh="TripFlow · 包车公司管理系统 Demo"
+  data-title-en="TripFlow · Charter Company Management Demo"
+  data-title-ms="TripFlow · Demo Sistem Pengurusan Syarikat Sewa Kereta">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -475,6 +478,35 @@
     .sch-cell { min-height: 45px; padding: 5px 3px; }
     .sch-event { padding: 4px 5px; font-size: 9px; }
   }
+
+  /* Language switcher */
+  .lang-switcher {
+    display: inline-flex;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 100px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .lang-switcher button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: rgba(255,255,255,0.7);
+    font: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.04em;
+  }
+  .lang-switcher button:hover { color: #fff; }
+  .lang-switcher button.active {
+    background: #d4a85a;
+    color: #2d3a2e;
+  }
 </style>
 </head>
 <body>
@@ -483,7 +515,14 @@
   <!-- Top banner -->
   <div class="top-banner">
     <div class="banner-left">✨ <strong>TripFlow</strong> · 专为包车公司、车队、旅游运输打造的管理系统</div>
-    <button class="banner-cta" onclick="alert('请联络我们：[您的联络方式]')">预约 Demo →</button>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div class="lang-switcher" data-lang-switcher role="group" aria-label="Language">
+        <button type="button" data-lang-btn="zh" aria-pressed="true">中</button>
+        <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang-btn="ms" aria-pressed="false">BM</button>
+      </div>
+      <button class="banner-cta" onclick="alert('请联络我们：[您的联络方式]')">预约 Demo →</button>
+    </div>
   </div>
 
   <!-- Industry switcher -->
@@ -1120,5 +1159,6 @@
     });
   });
 </script>
+<script src="/tripflow/i18n.js" defer></script>
 </body>
 </html>

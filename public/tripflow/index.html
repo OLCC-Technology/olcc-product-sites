@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN"
+  data-title-zh="TripFlow · 让包车老板从 Excel 和白板调度解脱出来 | OLCC"
+  data-title-en="TripFlow · Free charter owners from Excel and whiteboard dispatch | OLCC"
+  data-title-ms="TripFlow · Bebaskan pemilik syarikat sewa kereta daripada Excel | OLCC">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1156,6 +1159,41 @@ body::before {
   .wa-float { padding: 12px 14px; }
   .wa-float .wa-text { display: none; }
 }
+
+/* Language switcher */
+.lang-switcher {
+  display: inline-flex;
+  background: var(--bg-warm);
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  padding: 3px;
+  gap: 2px;
+  margin-right: 4px;
+}
+.lang-switcher button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 11px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+  font-family: var(--mono);
+  letter-spacing: 0.02em;
+}
+.lang-switcher button:hover { color: var(--ink); }
+.lang-switcher button.active {
+  background: var(--ink);
+  color: var(--bg);
+}
+@media (max-width: 880px) {
+  .lang-switcher { margin-right: 8px; }
+  .lang-switcher button { padding: 4px 8px; font-size: 11px; }
+}
 </style>
 </head>
 <body>
@@ -1173,6 +1211,11 @@ body::before {
     <a href="#cases">案例</a>
     <a href="#faq">常见问题</a>
   </div>
+  <div class="lang-switcher" data-lang-switcher role="group" aria-label="Language">
+    <button type="button" data-lang-btn="zh" aria-pressed="true">中</button>
+    <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+    <button type="button" data-lang-btn="ms" aria-pressed="false">BM</button>
+  </div>
   <a href="#contact" class="nav-cta">预约展示 →</a>
 </nav>
 
@@ -1180,11 +1223,11 @@ body::before {
 <section class="hero">
   <div class="hero-grid">
     <div class="hero-text">
-      <div class="eyebrow">
+      <div class="eyebrow" data-i18n-html="hero.eyebrow">
         <span class="eyebrow-dot"></span>
         专为新马包车公司打造  ·  Singapore &amp; Malaysia
       </div>
-      <h1>
+      <h1 data-i18n-html="hero.h1">
         让包车老板从 Excel 和 <em>白板调度</em><br>解脱出来
       </h1>
       <p class="hero-sub">
@@ -1292,7 +1335,7 @@ body::before {
 <section class="pain section">
   <div class="section-head reveal">
     <div class="section-eyebrow">您是不是也遇到这些？</div>
-    <h2 class="section-title">每天<em>耗在协调和算账</em>上</h2>
+    <h2 class="section-title" data-i18n-html="pain.h2">每天<em>耗在协调和算账</em>上</h2>
     <p class="section-lede">如果您正在经营一间包车公司，这些场景应该再熟悉不过。TripFlow 就是来终结它们的。</p>
   </div>
 
@@ -1329,7 +1372,7 @@ body::before {
 <section class="demo section" id="demo">
   <div class="section-head reveal">
     <div class="section-eyebrow">Live Demo · 立即试用</div>
-    <h2 class="section-title">不用注册，<em>直接打开看</em></h2>
+    <h2 class="section-title" data-i18n-html="demo.h2">不用注册，<em>直接打开看</em></h2>
     <p class="section-lede">点击下方查看完整 demo。3 个行业自由切换，8 个模块全部能点。这就是您未来每天会用的系统。</p>
   </div>
 
@@ -1361,7 +1404,7 @@ body::before {
 <section class="section" id="features">
   <div class="section-head reveal">
     <div class="section-eyebrow">八大核心模块</div>
-    <h2 class="section-title">您每天会用的，<em>全部内建</em></h2>
+    <h2 class="section-title" data-i18n-html="features.h2">您每天会用的，<em>全部内建</em></h2>
     <p class="section-lede">不是通用 SaaS 硬塞进来。每个模块都是为包车公司的实际工作流程设计。</p>
   </div>
 
@@ -1381,7 +1424,7 @@ body::before {
 <section class="pricing section" id="pricing">
   <div class="section-head reveal">
     <div class="section-eyebrow">透明定价</div>
-    <h2 class="section-title">选择<em>适合您规模</em>的方案</h2>
+    <h2 class="section-title" data-i18n-html="pricing.h2">选择<em>适合您规模</em>的方案</h2>
     <p class="section-lede">所有方案都包含 hosting、域名、SSL 证书、每日备份和 8 大核心模块。Setup 费用一次性，月费起算。</p>
   </div>
 
@@ -1451,7 +1494,7 @@ body::before {
     </div>
   </div>
 
-  <div class="pricing-note">
+  <div class="pricing-note" data-i18n-html="pricing.note">
     💡 <strong>年付 9 折</strong> · 相等于一年送您一个多月。同时锁定一年价格，未来涨价不受影响。
   </div>
 </section>
@@ -1460,7 +1503,7 @@ body::before {
 <section class="section" id="cases">
   <div class="section-head reveal">
     <div class="section-eyebrow">真实案例</div>
-    <h2 class="section-title">已经在用<em>TripFlow 的包车公司</em></h2>
+    <h2 class="section-title" data-i18n-html="cases.h2">已经在用<em>TripFlow 的包车公司</em></h2>
     <p class="section-lede">不是 demo 假数据，是真实在运作的车队。我们的团队也在用，所以系统的每一个细节都是经过实战的。</p>
   </div>
 
@@ -1510,7 +1553,7 @@ body::before {
 <section class="faq section" id="faq">
   <div class="section-head reveal">
     <div class="section-eyebrow">常见问题</div>
-    <h2 class="section-title">您可能<em>想知道的</em></h2>
+    <h2 class="section-title" data-i18n-html="faq.h2">您可能<em>想知道的</em></h2>
   </div>
 
   <div class="faq-wrap reveal">
@@ -1553,7 +1596,7 @@ body::before {
 <section class="cta-section" id="contact">
   <div class="cta-inner reveal">
     <div class="cta-eyebrow">下一步</div>
-    <h2>让我们花 <em>30 分钟</em>，<br>聊聊您车队的状况</h2>
+    <h2 data-i18n-html="cta.h2">让我们花 <em>30 分钟</em>，<br>聊聊您车队的状况</h2>
     <p>免费咨询 · 不绑约 · 现场或线上 demo 任您选</p>
     <div class="cta-buttons">
       <a href="https://wa.me/60165789873?text=Hi，我想了解 TripFlow" class="btn-primary">
@@ -1630,6 +1673,7 @@ body::before {
     });
   });
 </script>
+<script src="/tripflow/i18n.js" defer></script>
 
 </body>
 </html>
